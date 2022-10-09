@@ -1,16 +1,16 @@
 #Running Page
+import sys
 import pygame as pg
 from settings import Settings
 
 
 
 class Game:
-    def ___init__(self):
+    def __init__(self):
         pg.init()
         self.settings = Settings()
         size = self.settings.screen_width, self.settings.screen_height   # tuple
         self.screen = pg.display.set_mode(size=size)
-        print(size)
         pg.display.set_caption("Portal Pacman")
 
 
@@ -37,7 +37,7 @@ class Game:
         small_titlefont = pg.font.Font('Gloomy Things.ttf', 90)
         large_titlefont = pg.font.Font('Gloomy Things.ttf', 150)
         point_values = pg.font.Font('space_invaders.ttf',30) 
-        with open('high_score.txt','r+') as file:
+        with open('high_scores.txt','r+') as file:
                 high_score = file.read()  
         # rendering a text written in 
         # this font
@@ -65,7 +65,7 @@ class Game:
                         pg.quit()
         # fills the screen with a color 
             self.screen.fill((0,0,0)) 
-            self.screen.blit()
+            #self.screen.blit((0,0))
       
         # stores the (x,y) coordinates into 
         # the variable as a tuple 
@@ -94,7 +94,8 @@ class Game:
     def game_over(self):
         pass
     def play(self):
-        pass
+        while True:
+            self.screen.fill(self.settings.bg_color)
 
 
 
@@ -104,7 +105,6 @@ class Game:
 def main():
 
     g = Game()
-
     g.game_intro()
 
 
