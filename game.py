@@ -33,13 +33,13 @@ class Game:
         height = self.screen.get_height() 
         # defining a font 
         smallfont = pg.font.SysFont('Corbel',35)
-        largefont=pg.font.Font('space_invaders.ttf', 70)
-        titlefont = pg.font.Font('PAC-FONT.ttf', 90)
-        subtitlefont = pg.font.Font('PAC-FONT.ttf', 50)
-        smallspacefont=pg.font.Font('space_invaders.ttf', 35)
-        small_titlefont = pg.font.Font('Gloomy Things.ttf', 90)
-        large_titlefont = pg.font.Font('Gloomy Things.ttf', 150)
-        point_values = pg.font.Font('space_invaders.ttf',30) 
+        largefont=pg.font.Font('fonts/space_invaders.ttf', 70)
+        titlefont = pg.font.Font('fonts/PAC-FONT.ttf', 90)
+        subtitlefont = pg.font.Font('fonts/PAC-FONT.ttf', 50)
+        smallspacefont=pg.font.Font('fonts/space_invaders.ttf', 35)
+        small_titlefont = pg.font.Font('fonts/Gloomy Things.ttf', 90)
+        large_titlefont = pg.font.Font('fonts/Gloomy Things.ttf', 150)
+        point_values = pg.font.Font('fonts/space_invaders.ttf',30) 
         with open('high_scores.txt','r+') as file:
                 high_score = file.read()  
         # rendering a text written in 
