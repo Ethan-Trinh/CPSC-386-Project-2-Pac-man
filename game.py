@@ -20,6 +20,8 @@ class Game:
         color = (0,0,0)
         white= (250,250,250) 
         green= (118,238,0)
+        yellow= (255,255,0)
+        blue = (0,0,255)
         # light shade of the button 
         color_light = (202,255,112) 
         # dark shade of the button 
@@ -33,6 +35,8 @@ class Game:
         # defining a font 
         smallfont = pg.font.SysFont('Corbel',35)
         largefont=pg.font.Font('space_invaders.ttf', 70)
+        titlefont = pg.font.Font('PAC-FONT.ttf', 90)
+        subtitlefont = pg.font.Font('PAC-FONT.ttf', 50)
         smallspacefont=pg.font.Font('space_invaders.ttf', 35)
         small_titlefont = pg.font.Font('Gloomy Things.ttf', 90)
         large_titlefont = pg.font.Font('Gloomy Things.ttf', 150)
@@ -46,6 +50,8 @@ class Game:
         play = smallfont.render('play' , True , color)
         high_score_label = smallspacefont.render('High Score: ',True,white)
         high_score_text = smallspacefont.render(str(high_score), True,green)
+        pacman_text = titlefont.render('PaCmAn', True, yellow )
+        portal_text = subtitlefont.render('pOrTaL', True, blue)
         #point values
         #images
 
@@ -84,7 +90,8 @@ class Game:
             self.screen.blit(quit , (width/2+40,height/2+(height/4)))
             self.screen.blit(play,(width/2+-140,height/2+(height/4)))
         #adding title
-           
+            self.screen.blit(pacman_text,(width/2-270,100))
+            self.screen.blit(portal_text,(width/2-160, 180))
         # updates the frames of the game 
             pg.display.update() 
         
