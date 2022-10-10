@@ -19,13 +19,12 @@ class Game:
          # set colors
         color = (0,0,0)
         white= (250,250,250) 
-        green= (118,238,0)
         yellow= (255,255,0)
         blue = (0,0,255)
         # light shade of the button 
-        color_light = (202,255,112) 
+        color_light = (255,0,230)
         # dark shade of the button 
-        color_dark = (100,100,100)
+        color_dark = (0,0,255)
         # stores the width of the 
         # screen into a variable 
         width = self.screen.get_width() 
@@ -48,8 +47,6 @@ class Game:
         #Words
         quit = smallfont.render('quit' , True , color) 
         play = smallfont.render('play' , True , color)
-        high_score_label = smallspacefont.render('High Score: ',True,white)
-        high_score_text = smallspacefont.render(str(high_score), True,green)
         pacman_text = titlefont.render('PaCmAn', True, yellow )
         portal_text = subtitlefont.render('pOrTaL', True, blue)
         #point values
