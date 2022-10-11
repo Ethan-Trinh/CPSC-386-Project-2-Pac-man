@@ -65,7 +65,7 @@ class Game:
                         pg.quit() 
                     elif width/2-140 <= mouse[0] <= width/2 and (height/2)+(height/4) <= mouse[1] <= (height/2)+40+(height/4):
                         # quits atm
-                        pg.quit()
+                        self.play()
         # fills the screen with a color 
             self.screen.fill((0,0,0)) 
             #self.screen.blit((0,0))
@@ -98,8 +98,11 @@ class Game:
     def game_over(self):
         pass
     def play(self):
+        print("Going to change screens")
         while True:
             self.screen.fill(self.settings.bg_color)
+            pg.display.flip()
+            print("Are we different?")
 
 
 
