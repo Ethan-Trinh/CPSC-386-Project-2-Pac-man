@@ -1,0 +1,21 @@
+credit			- Plays when player puts coins into machine
+
+death_1 and death_2 	- Fanfare that plays when Pac Man dies (Compiled together as death.wav / Just use death.wav)
+
+eat_fruit		- When Pac Man eats the fruit
+
+eat_ghost		- When Pac Man eats ghosts
+
+extend			- Pac Man gets an extra life
+
+game_start		- Fanfare that plays when the game begins
+
+intermission		- When the player beats the level, cutscene plays with this song
+
+munch_1 and munch_2 	- Alternate every other pellet being eaten
+
+power_pellet		- Plays when Pac Man collects a Power Pellet and the ghosts turn blue and can be eaten
+
+retreating		- Ghost returning after being eaten
+
+siren_[1-5]		- Background music that progressivly gets faster as Pac Man eats the pellets
