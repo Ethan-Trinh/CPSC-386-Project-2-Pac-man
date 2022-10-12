@@ -106,7 +106,6 @@ class Game:
             self.screen.fill(self.settings.bg_color)
             self.test_maze.draw(self.screen)
             self.pacman.update()
-            self.screen.blit(self.a_wall, (0, self.screen.get_height()-32))
             pg.display.flip()
 
 
