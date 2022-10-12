@@ -3,6 +3,7 @@ import sys
 import pygame as pg
 from settings import Settings
 from pacman import Pacman
+from spritesheet import Spritesheet
 
 
 class Game:
@@ -14,6 +15,8 @@ class Game:
         pg.display.set_caption("Portal Pacman")
 
         self.pacman = Pacman(settings=self.settings, screen=self.screen)
+        wall_spritesheet = Spritesheet('images/PacmanWalls.png')
+        self.a_wall = wall_spritesheet.get_sprite(0, 0, 32, 32)
 
     def game_intro(self):
         #self.sound.play_bg()
@@ -99,12 +102,11 @@ class Game:
     def game_over(self):
         pass
     def play(self):
-        print("Going to change screens")
         while True:
             self.screen.fill(self.settings.bg_color)
             self.pacman.update()
+            self.screen.blit(self.a_wall, (0, self.screen.get_height()-32))
             pg.display.flip()
-            print("Are we different?")
 
 
 
