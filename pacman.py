@@ -12,14 +12,29 @@ class Pacman(Sprite):
         super().__init__()
         self.settings = settings
         self.screen = screen
+        self.screen_rect = screen.get_rect()
         #self.sound = sound
         self.lives = 3
         self.dying = False
         self.dead = False
 
+        # Image / Animation Variables
+        self.image = pg.image.load('images/pacmaneat/pacman1.png')
+        self.rect = self.image.get_rect()
+
         self.timer_normal = Timer(image_list=Pacman.pacman_images)
         self.timer_death = Timer(image_list=Pacman.pacman_death, delay=100, is_loop=False)
         self.timer = self.timer_normal
+
+        # Movement / Position Handling Variables
+        self.posn = self.starting_point()
+        self.vel = Vector()
+
+    def starting_point(self):
+        self.rect.centerx = self.screen_rect.centerx
+        self.rect.centery = self.screen_rect.centery
+        return Vector(self.rect.left, self.rect.top)
+
 
     def hit(self):
         if not self.dying:
@@ -39,9 +54,12 @@ class Pacman(Sprite):
 
 
     def update(self):
+        self.posn += self.vel
+        self.posn, self.rect = clamp(self.posn, self.rect, self.settings)
         self.draw()
 
     def draw(self):
         image = self.timer.image()
         rect = image.get_rect()
+        rect.left, rect.top = self.rect.left, self.rect.top
         self.screen.blit(image, rect)
