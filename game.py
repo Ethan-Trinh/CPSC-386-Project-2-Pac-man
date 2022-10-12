@@ -103,6 +103,7 @@ class Game:
         pass
     def play(self):
         while True:
+            gf.check_events(settings=self.settings, pacman = self.pacman)
             self.screen.fill(self.settings.bg_color)
             self.test_maze.draw(self.screen)
             self.pacman.update()
