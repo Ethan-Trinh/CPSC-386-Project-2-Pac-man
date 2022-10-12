@@ -4,7 +4,8 @@ import pygame as pg
 from settings import Settings
 from pacman import Pacman
 import game_functions as gf
-
+from maze import Maze
+from spritesheet import Spritesheet
 
 class Game:
     def __init__(self):
@@ -13,8 +14,9 @@ class Game:
         size = self.settings.screen_width, self.settings.screen_height   # tuple
         self.screen = pg.display.set_mode(size=size)
         pg.display.set_caption("Portal Pacman")
-
         self.pacman = Pacman(settings=self.settings, screen=self.screen)
+        
+        self.test_maze = Maze('test_level.csv', Spritesheet("images/PacmanWalls.png"))
 
     def game_intro(self):
         #self.sound.play_bg()
@@ -92,27 +94,20 @@ class Game:
             self.screen.blit(pacman_text,(width/2-270,100))
             self.screen.blit(portal_text,(width/2-160, 180))
         # updates the frames of the game 
-            pg.display.update()
-
+            pg.display.update() 
         
         
     def reset(self):
         pass
-
     def game_over(self):
         pass
-
     def play(self):
-        print("Going to change screens")
         while True:
-            gf.check_events(settings=self.settings, pacman = self.pacman)
             self.screen.fill(self.settings.bg_color)
+            self.test_maze.draw(self.screen)
             self.pacman.update()
+            self.screen.blit(self.a_wall, (0, self.screen.get_height()-32))
             pg.display.flip()
-            #print("Are we different?")
-
-
-
 
 
 

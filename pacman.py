@@ -47,7 +47,7 @@ class Pacman(Sprite):
         print(f'Pac Man died, {self.lives} lives remaining')
 
     def reset(self):
-        self.dying = Falseg
+        self.dying = False
         self.dead = False
         self.timer = self.timer_normal
         self.timer_death.reset()
