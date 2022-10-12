@@ -1,4 +1,3 @@
-from wsgiref.validate import _WriterCallback
 import pygame as pg 
 import csv, os
 from pygame.sprite import Sprite
@@ -77,13 +76,13 @@ class Maze():
                 elif tile == '13':
                     tiles.append(MazeTile('MHT-up-down.png', x * self.tile_size, y * self.tile_size, self.spritesheet))
                 elif tile == '14':
-                    tiles.append(MazeTile('MHE-Down.png', x * self.tile_size, y * self.tile_size, self.spritesheet))
+                    tiles.append(MazeTile('MTE-Down.png', x * self.tile_size, y * self.tile_size, self.spritesheet))
                 elif tile == '15':
-                    tiles.append(MazeTile('MHE-Left.png', x * self.tile_size, y * self.tile_size, self.spritesheet))
+                    tiles.append(MazeTile('MTE-Left.png', x * self.tile_size, y * self.tile_size, self.spritesheet))
                 elif tile == '16':
-                    tiles.append(MazeTile('MHE-Right.png', x * self.tile_size, y * self.tile_size, self.spritesheet))
+                    tiles.append(MazeTile('MTE-Right.png', x * self.tile_size, y * self.tile_size, self.spritesheet))
                 elif tile == '17':
-                    tiles.append(MazeTile('MHE-UP.png', x * self.tile_size, y * self.tile_size, self.spritesheet))
+                    tiles.append(MazeTile('MTE-UP.png', x * self.tile_size, y * self.tile_size, self.spritesheet))
                 elif tile == '18':
                     tiles.append(MazeTile('MW-DownRight.png', x * self.tile_size, y * self.tile_size, self.spritesheet))
                 elif tile == '19':
