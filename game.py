@@ -108,9 +108,12 @@ class Game:
             self.pacman.update()
             self.screen.blit(self.a_wall, (0, self.screen.get_height()-32))
             pg.display.flip()
+<<<<<<< Updated upstream
 
 
 
+=======
+>>>>>>> Stashed changes
 
 
 
