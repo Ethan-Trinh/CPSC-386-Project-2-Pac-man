@@ -2,7 +2,7 @@
 import sys
 import pygame as pg
 from settings import Settings
-
+from pacman import Pacman
 
 
 class Game:
@@ -13,6 +13,7 @@ class Game:
         self.screen = pg.display.set_mode(size=size)
         pg.display.set_caption("Portal Pacman")
 
+        self.pacman = Pacman(settings=self.settings, screen=self.screen)
 
     def game_intro(self):
         #self.sound.play_bg()
@@ -101,6 +102,7 @@ class Game:
         print("Going to change screens")
         while True:
             self.screen.fill(self.settings.bg_color)
+            self.pacman.update()
             pg.display.flip()
             print("Are we different?")
 
@@ -110,7 +112,6 @@ class Game:
 
 
 def main():
-
     g = Game()
     g.game_intro()
 
