@@ -3,6 +3,7 @@ import sys
 import pygame as pg
 from settings import Settings
 from pacman import Pacman
+import game_functions as gf
 
 
 class Game:
@@ -91,20 +92,24 @@ class Game:
             self.screen.blit(pacman_text,(width/2-270,100))
             self.screen.blit(portal_text,(width/2-160, 180))
         # updates the frames of the game 
-            pg.display.update() 
+            pg.display.update()
+
         
         
     def reset(self):
         pass
+
     def game_over(self):
         pass
+
     def play(self):
         print("Going to change screens")
         while True:
+            gf.check_events(settings=self.settings, pacman = self.pacman)
             self.screen.fill(self.settings.bg_color)
             self.pacman.update()
             pg.display.flip()
-            print("Are we different?")
+            #print("Are we different?")
 
 
 
