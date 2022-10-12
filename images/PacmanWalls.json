@@ -112,7 +112,7 @@
         "spriteSourceSize": {"x":0, "y":0, "w":32,"h":32},
         "sourceSize": {"w":32, "h":32}
     },
-    "MHE-Down.png":
+    "MTE-Down.png":
     {
         "frame": {"x":448, "y":0, "w":32,"h":32},
         "rotated": false,
@@ -120,7 +120,7 @@
         "spriteSourceSize": {"x":0, "y":0, "w":32,"h":32},
         "sourceSize": {"w":32, "h":32}
     },
-    "MHE-Left.png":
+    "MTE-Left.png":
     {
         "frame": {"x":480, "y":0, "w":32,"h":32},
         "rotated": false,
@@ -128,7 +128,7 @@
         "spriteSourceSize": {"x":0, "y":0, "w":32,"h":32},
         "sourceSize": {"w":32, "h":32}
     },
-    "MHE-Right.png":
+    "MTE-Right.png":
     {
         "frame": {"x":512, "y":0, "w":32,"h":32},
         "rotated": false,
@@ -136,7 +136,7 @@
         "spriteSourceSize": {"x":0, "y":0, "w":32,"h":32},
         "sourceSize": {"w":32, "h":32}
     },
-    "MHE-UP.png":
+    "MTE-UP.png":
     {
         "frame": {"x":544, "y":0, "w":32,"h":32},
         "rotated": false,

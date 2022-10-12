@@ -3,8 +3,9 @@ import sys
 import pygame as pg
 from settings import Settings
 from pacman import Pacman
+import game_functions as gf
+from maze import Maze
 from spritesheet import Spritesheet
-
 
 class Game:
     def __init__(self):
@@ -13,10 +14,9 @@ class Game:
         size = self.settings.screen_width, self.settings.screen_height   # tuple
         self.screen = pg.display.set_mode(size=size)
         pg.display.set_caption("Portal Pacman")
-
         self.pacman = Pacman(settings=self.settings, screen=self.screen)
-        wall_spritesheet = Spritesheet('images/PacmanWalls.png')
-        self.a_wall = wall_spritesheet.get_sprite(0, 0, 32, 32)
+        
+        self.test_maze = Maze('test_level.csv', Spritesheet("images/PacmanWalls.png"))
 
     def game_intro(self):
         #self.sound.play_bg()
@@ -104,6 +104,7 @@ class Game:
     def play(self):
         while True:
             self.screen.fill(self.settings.bg_color)
+            self.test_maze.draw(self.screen)
             self.pacman.update()
             self.screen.blit(self.a_wall, (0, self.screen.get_height()-32))
             pg.display.flip()

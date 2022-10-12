@@ -4,7 +4,11 @@ import json
 class Spritesheet:
     def __init__(self, filename): #filename is the spritesheet
         self.filename = filename
-        self.sprite_sheet = pg.image.load(filename).convert()
+        self.sprite_sheet = pg.image.load(filename)
+        self.meta_data = self.filename.replace('png', 'json')
+        with open(self.meta_data) as f:
+            self.data = json.load(f)
+        f.close()
         
     def get_sprite(self, x, y, w, h):
         sprite = pg.Surface((w, h))
@@ -12,4 +16,8 @@ class Spritesheet:
         sprite.blit(self.sprite_sheet,(0,0),(x, y, w, h))
         return sprite
     
-    def parse_sprite(self, name): pass
+    def parse_sprite(self, name): 
+        sprite = self.data['frames'][name]['frame']
+        x, y, w, h = sprite["x"], sprite["y"], sprite["w"], sprite["h"]
+        image = self.get_sprite(x, y, w, h)
+        return image
