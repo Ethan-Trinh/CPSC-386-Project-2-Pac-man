@@ -6,6 +6,7 @@ from pacman import Pacman
 import game_functions as gf
 from maze import Maze
 from spritesheet import Spritesheet
+from timer import Timer
 
 class Game:
     def __init__(self):
@@ -21,6 +22,8 @@ class Game:
     def game_intro(self):
         #self.sound.play_bg()
          # set colors
+        intro_images = [pg.image.load(f'images/intro/intro_{n}.png') for n in range(0, 36)]
+        timer = Timer(image_list=intro_images)
         color = (0,0,0)
         white= (250,250,250) 
         yellow= (255,255,0)
@@ -58,6 +61,9 @@ class Game:
 
         #for button interaction
         while True: 
+            image = timer.image()
+            image_rect = image.get_rect()
+            
             for ev in pg.event.get(): 
                 if ev.type == pg.QUIT: 
                     pg.quit() 
@@ -90,6 +96,8 @@ class Game:
         # superimposing the text onto our button 
             self.screen.blit(quit , (width/2+40,height/2+(height/4)))
             self.screen.blit(play,(width/2+-140,height/2+(height/4)))
+            scaled_image = pg.transform.scale(image, (1200,400))
+            self.screen.blit(scaled_image, (0, height/4))
         #adding title
             self.screen.blit(pacman_text,(width/2-270,100))
             self.screen.blit(portal_text,(width/2-160, 180))
