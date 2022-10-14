@@ -22,7 +22,7 @@ class Game:
     def game_intro(self):
         #self.sound.play_bg()
          # set colors
-        intro_images = [pg.image.load(f'images/intro/intro_{n}.png') for n in range(0, 36)]
+        intro_images = [pg.image.load(f'images/intro/intro_{n}.png') for n in range(0, 51)]
         timer = Timer(image_list=intro_images)
         color = (0,0,0)
         white= (250,250,250) 
