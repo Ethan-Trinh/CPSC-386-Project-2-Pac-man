@@ -21,9 +21,11 @@ class Pacman(Sprite):
 
         # Image / Animation Variables
         self.image = pg.image.load('images/pacmaneat/pacman1.png')
-        self.rect = self.image.get_rect()
+        self.image_scaled = pg.transform.scale(self.image, (48, 48))
+        self.pacman_images_scaled = [pg.transform.scale(Pacman.pacman_images[n], (48, 48)) for n in range (0, 4)]
+        self.rect = self.image_scaled.get_rect()
 
-        self.timer_normal = Timer(image_list=Pacman.pacman_images)
+        self.timer_normal = Timer(image_list=self.pacman_images_scaled)
         self.timer_death = Timer(image_list=Pacman.pacman_death, delay=100, is_loop=False)
         self.timer = self.timer_normal
 
