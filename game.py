@@ -114,7 +114,7 @@ class Game:
             gf.check_events(settings=self.settings, pacman = self.pacman)
             self.screen.fill(self.settings.bg_color)
             self.test_maze.draw(self.screen)
-            self.pacman.update()
+            self.pacman.update(tiles=self.test_maze.tiles)
             pg.display.flip()
 
 
