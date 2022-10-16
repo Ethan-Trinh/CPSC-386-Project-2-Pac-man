@@ -21,10 +21,11 @@ class Pacman(Sprite):
 
         # Image / Animation Variables
         self.image = pg.image.load('images/pacmaneat/pacman1.png')
-        self.image_scaled = pg.transform.scale(self.image, (20, 20))
-        self.pacman_images_scaled = [pg.transform.scale(Pacman.pacman_images[n], (20, 20)) for n in range (0, 4)]
-        self.rect = self.image_scaled.get_rect()
-
+        self.image_scaled = pg.transform.scale(self.image, (40, 40))
+        self.pacman_images_scaled = [pg.transform.scale(Pacman.pacman_images[n], (40, 40)) for n in range (0, 4)]
+        self.rect = self.image_scaled.get_rect() # use grabbing points
+        self.hitbox = self.rect # use for the ghosts and moving through the maze
+        
         self.timer_normal = Timer(image_list=self.pacman_images_scaled)
         self.timer_death = Timer(image_list=Pacman.pacman_death, delay=100, is_loop=False)
         self.timer = self.timer_normal
@@ -62,6 +63,13 @@ class Pacman(Sprite):
         self.posn += self.vel
         self.posn, self.rect = clamp(self.posn, self.rect, self.settings)
         self.draw()
+        # The hitbox is for pacman moving in the maze so he can be closer to the wall without
+        # triggering collisions + so pacman and ghosts overlap before 
+        self.hitbox.w = self.rect.w/2.9
+        self.hitbox.h = self.rect.h/2.9
+        self.hitbox.x = self.rect.x + self.rect.w/2.8
+        self.hitbox.y = self.rect.y + self.rect.h/3
+        # pg.draw.rect(surface = self.screen, color=(225,225,225), rect=self.hitbox)
 
     def draw(self):
         image = self.timer.image()
@@ -72,26 +80,29 @@ class Pacman(Sprite):
     def tile_check(self, tiles):
         col = []
         for tile in tiles:
-            if self.rect.colliderect(tile):
+            if self.hitbox.colliderect(tile):
                 col.append(tile)
         return col
     
     def check_x_collisions(self, tiles):
         collisions = self.tile_check(tiles)
         for tile in collisions:
-            if self.vel.x > 0:
+            if self.vel.x > 0: # moving right
                 self.vel.x = 0
                 self.posn.x -= 2
-            elif self.vel.x < 0:
+            elif self.vel.x < 0: # moving left
                 self.vel.x = 0
                 self.posn.x += 2
+            self.rect.x = self.posn.x
+            
                 
     def check_y_collisions(self, tiles):
         collisions = self.tile_check(tiles)
         for tile in collisions:
-            if self.vel.y > 0:
+            if self.vel.y > 0: # moving up
                 self.vel.y = 0
                 self.posn.y -= 2
-            elif self.vel.y < 0:
+            elif self.vel.y < 0: # moving down
                 self.vel.y = 0
                 self.posn.y += 2
+            self.rect.y = self.posn.y
