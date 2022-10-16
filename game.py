@@ -137,9 +137,7 @@ class Game:
         with open('high_scores.txt') as file:
             while (line := file.readline().rstrip()):
                 old_high_scores.append(line)
-        print(old_high_scores)
         for item in range(len(old_high_scores)):
-            print(item)
             high_score_text = scorefont.render(old_high_scores[item], True, yellow)
             self.screen.blit(high_score_text,(score_width,start_height))
             start_height += 50
