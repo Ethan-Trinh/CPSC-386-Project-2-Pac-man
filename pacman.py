@@ -21,8 +21,8 @@ class Pacman(Sprite):
 
         # Image / Animation Variables
         self.image = pg.image.load('images/pacmaneat/pacman1.png')
-        self.image_scaled = pg.transform.scale(self.image, (48, 48))
-        self.pacman_images_scaled = [pg.transform.scale(Pacman.pacman_images[n], (48, 48)) for n in range (0, 4)]
+        self.image_scaled = pg.transform.scale(self.image, (20, 20))
+        self.pacman_images_scaled = [pg.transform.scale(Pacman.pacman_images[n], (20, 20)) for n in range (0, 4)]
         self.rect = self.image_scaled.get_rect()
 
         self.timer_normal = Timer(image_list=self.pacman_images_scaled)
@@ -80,14 +80,18 @@ class Pacman(Sprite):
         collisions = self.tile_check(tiles)
         for tile in collisions:
             if self.vel.x > 0:
-                self.posn.x -= .1
+                self.vel.x = 0
+                self.posn.x -= 2
             elif self.vel.x < 0:
-                self.posn.x += .1
+                self.vel.x = 0
+                self.posn.x += 2
                 
     def check_y_collisions(self, tiles):
         collisions = self.tile_check(tiles)
         for tile in collisions:
             if self.vel.y > 0:
-                self.posn.y -= .1
+                self.vel.y = 0
+                self.posn.y -= 2
             elif self.vel.y < 0:
-                self.posn.y += .1
+                self.vel.y = 0
+                self.posn.y += 2
