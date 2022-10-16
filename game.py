@@ -40,6 +40,7 @@ class Game:
         height = self.screen.get_height() 
         # defining a font 
         smallfont = pg.font.SysFont('Corbel',35)
+        smallerfont = pg.font.SysFont('Corbel', 30 )
         largefont=pg.font.Font('fonts/space_invaders.ttf', 70)
         titlefont = pg.font.Font('fonts/PAC-FONT.ttf', 90)
         subtitlefont = pg.font.Font('fonts/PAC-FONT.ttf', 50)
@@ -54,6 +55,7 @@ class Game:
         #Words
         quit = smallfont.render('quit' , True , color) 
         play = smallfont.render('play' , True , color)
+        highscores = smallerfont.render('high scores', True, color)
         pacman_text = titlefont.render('PaCmAn', True, yellow )
         portal_text = subtitlefont.render('pOrTaL', True, blue)
         #point values
@@ -76,6 +78,9 @@ class Game:
                     elif width/2-140 <= mouse[0] <= width/2 and (height/2)+(height/4) <= mouse[1] <= (height/2)+40+(height/4):
                         # quits atm
                         self.play()
+                    elif width/2-100 <= mouse[0] <= width/2+40 and height/2+(height/3) <= mouse[1] <= height/2+40+(height/3):
+                        self.screen.fill(self.settings.bg_color)
+                        self.high_scores_menu()
         # fills the screen with a color 
             self.screen.fill((0,0,0)) 
             #self.screen.blit((0,0))
@@ -89,13 +94,17 @@ class Game:
                 pg.draw.rect(self.screen,color_light,[width/2,height/2+(height/4),140,40])
             elif width/2-180 <= mouse[0] <= width/2+40 and (height/2)+(height/4) <= mouse[1] <= height/2+40+(height/4): 
                 pg.draw.rect(self.screen,color_light,[width/2-180,(height/2)+(height/4),140,40])
+            elif width/2-100 <= mouse[0] <= width/2+40 and height/2+height/3 <= mouse[1] <= height/2+40+height/3:
+                 pg.draw.rect(self.screen,color_light,[width/2-100,(height/2+height/3),140,40])
             else: 
                 pg.draw.rect(self.screen,color_dark,[width/2,height/2+(height/4),140,40])
                 pg.draw.rect(self.screen,color_dark,[width/2-180,(height/2)+(height/4),140,40])
+                pg.draw.rect(self.screen,color_dark,[width/2-100,height/2+height/3, 140,40])
            
         # superimposing the text onto our button 
             self.screen.blit(quit , (width/2+40,height/2+(height/4)))
             self.screen.blit(play,(width/2+-140,height/2+(height/4)))
+            self.screen.blit(highscores,(width/2-100, height/2+height/3))
             scaled_image = pg.transform.scale(image, (1200,400))
             self.screen.blit(scaled_image, (0, height/4))
         #adding title
@@ -103,6 +112,65 @@ class Game:
             self.screen.blit(portal_text,(width/2-160, 180))
         # updates the frames of the game 
             pg.display.update() 
+        
+    def high_scores_menu(self):
+        pg.display.flip()
+        self.screen.fill((0,0,0))
+        scorefont = pg.font.Font('fonts/scorefont.ttf', 70)
+        titlefont = pg.font.Font('fonts/PAC-FONT.ttf', 70)
+        yellow= (255,255,0)
+        blue = (0,0,255)
+        # light shade of the button 
+        color_light = (255,0,230)
+        # dark shade of the button 
+        color_dark = (0,0,255)
+        color = (0,0,0)
+        width = self.screen.get_width()
+        height = self.screen.get_height()
+        score_width = width/2 -100
+        start_height = height/6
+        old_high_scores = []
+        smallfont = pg.font.SysFont('Corbel',35)
+        quit = smallfont.render('quit' , True , color) 
+        play = smallfont.render('play' , True , color)
+        title = titlefont.render('HIGH SCORES', True,blue)
+        with open('high_scores.txt') as file:
+            while (line := file.readline().rstrip()):
+                old_high_scores.append(line)
+        print(old_high_scores)
+        for item in range(len(old_high_scores)):
+            print(item)
+            high_score_text = scorefont.render(old_high_scores[item], True, yellow)
+            self.screen.blit(high_score_text,(score_width,start_height))
+            start_height += 50
+        mouse = pg.mouse.get_pos() 
+        while True:
+            for ev in pg.event.get(): 
+                if ev.type == pg.QUIT: 
+                    pg.quit() 
+            #checks if a mouse is clicked 
+                if ev.type == pg.MOUSEBUTTONDOWN: 
+            #if the mouse is clicked on the 
+            # button the game is terminated 
+                    if width/2 <= mouse[0] <= width/2+140 and height/2+(height/4)+60 <= mouse[1] <= height/2+40+(height/4)+60: 
+                        pg.quit() 
+                    elif width/2-140 <= mouse[0] <= width/2 and (height/2)+(height/4)+60 <= mouse[1] <= (height/2)+40+(height/4)+60:
+                        # quits atm
+                        self.play()
+            mouse = pg.mouse.get_pos()
+            if width/2 <= mouse[0] <= width/2+140 and height/2+(height/4)+60 <= mouse[1] <= height/2+40+(height/4)+60: 
+                pg.draw.rect(self.screen,color_light,[width/2,height/2+(height/4)+60,140,40])
+            elif width/2-180 <= mouse[0] <= width/2+40 and (height/2)+(height/4)+60 <= mouse[1] <= height/2+40+(height/4)+60: 
+                pg.draw.rect(self.screen,color_light,[width/2-180,(height/2)+(height/4)+60,140,40])
+            else: 
+                pg.draw.rect(self.screen,color_dark,[width/2,height/2+(height/4)+60,140,40])
+                pg.draw.rect(self.screen,color_dark,[width/2-180,(height/2)+(height/4)+60,140,40])
+                
+            self.screen.blit(quit , (width/2+40,height/2+(height/4)+60))
+            self.screen.blit(play,(width/2+-140,height/2+(height/4)+60))
+            self.screen.blit(title,(width/2-310,height/2-380))
+            pg.display.update()
+        
         
         
     def reset(self):
