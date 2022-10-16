@@ -43,9 +43,9 @@ class Maze():
     def load_tiles(self, filename):
         tiles = []
         map = self.read_csv(filename)
-        x, y = 0, 0
+        x, y = 1, 0
         for row in map:
-            x = 0
+            x = 1
             for tile in row:
                 if tile == '0':
                     tiles.append(MazeTile('MC-bottomLeft.png', x * self.tile_size, y * self.tile_size, self.spritesheet))
