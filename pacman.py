@@ -1,8 +1,9 @@
 import pygame as pg
 from pygame.sprite import Sprite
-from game_functions import clamp
+from game_functions import check_keydown_events, clamp
 from timer import Timer
 from vector import Vector
+from spritesheet import Spritesheet
 
 class Pacman(Sprite):
     pacman_images = [pg.image.load(f'images/pacmaneat/pacman{n}.png') for n in range(1, 5)]
@@ -20,9 +21,11 @@ class Pacman(Sprite):
 
         # Image / Animation Variables
         self.image = pg.image.load('images/pacmaneat/pacman1.png')
-        self.rect = self.image.get_rect()
+        self.image_scaled = pg.transform.scale(self.image, (20, 20))
+        self.pacman_images_scaled = [pg.transform.scale(Pacman.pacman_images[n], (20, 20)) for n in range (0, 4)]
+        self.rect = self.image_scaled.get_rect()
 
-        self.timer_normal = Timer(image_list=Pacman.pacman_images)
+        self.timer_normal = Timer(image_list=self.pacman_images_scaled)
         self.timer_death = Timer(image_list=Pacman.pacman_death, delay=100, is_loop=False)
         self.timer = self.timer_normal
 
@@ -53,7 +56,9 @@ class Pacman(Sprite):
         self.timer_death.reset()
 
 
-    def update(self):
+    def update(self, tiles):
+        self.check_x_collisions(tiles)
+        self.check_y_collisions(tiles)
         self.posn += self.vel
         self.posn, self.rect = clamp(self.posn, self.rect, self.settings)
         self.draw()
@@ -63,3 +68,30 @@ class Pacman(Sprite):
         rect = image.get_rect()
         rect.left, rect.top = self.rect.left, self.rect.top
         self.screen.blit(image, rect)
+    
+    def tile_check(self, tiles):
+        col = []
+        for tile in tiles:
+            if self.rect.colliderect(tile):
+                col.append(tile)
+        return col
+    
+    def check_x_collisions(self, tiles):
+        collisions = self.tile_check(tiles)
+        for tile in collisions:
+            if self.vel.x > 0:
+                self.vel.x = 0
+                self.posn.x -= 2
+            elif self.vel.x < 0:
+                self.vel.x = 0
+                self.posn.x += 2
+                
+    def check_y_collisions(self, tiles):
+        collisions = self.tile_check(tiles)
+        for tile in collisions:
+            if self.vel.y > 0:
+                self.vel.y = 0
+                self.posn.y -= 2
+            elif self.vel.y < 0:
+                self.vel.y = 0
+                self.posn.y += 2
