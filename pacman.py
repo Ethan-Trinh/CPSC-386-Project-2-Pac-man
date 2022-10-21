@@ -57,9 +57,10 @@ class Pacman(Sprite):
         self.timer_death.reset()
 
 
-    def update(self, tiles):
+    def update(self, tiles, reg_points):
         self.check_x_collisions(tiles)
         self.check_y_collisions(tiles)
+        self.check_reg_point_collisions(reg_points)
         self.posn += self.vel
         self.posn, self.rect = clamp(self.posn, self.rect, self.settings)
         self.draw()
@@ -94,7 +95,6 @@ class Pacman(Sprite):
                 self.vel.x = 0
                 self.posn.x += 2
             self.rect.x = self.posn.x
-            
                 
     def check_y_collisions(self, tiles):
         collisions = self.tile_check(tiles)
@@ -106,3 +106,11 @@ class Pacman(Sprite):
                 self.vel.y = 0
                 self.posn.y += 2
             self.rect.y = self.posn.y
+            
+    def check_reg_point_collisions(self, reg_points):
+        point = self.tile_check(reg_points)
+        for p in point:
+            if self.hitbox.colliderect(p):
+                print("Got a Dot")
+                point.remove()
+            

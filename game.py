@@ -5,6 +5,7 @@ from settings import Settings
 from pacman import Pacman
 import game_functions as gf
 from maze import Maze
+from points import Points
 from spritesheet import Spritesheet
 from timer import Timer
 
@@ -18,7 +19,7 @@ class Game:
         self.pacman = Pacman(settings=self.settings, screen=self.screen)
         
         self.test_maze = Maze('test_level.csv', Spritesheet("images/PacmanWalls.png"))
-
+        self.reg_points = Points('test_level.csv')
     def game_intro(self):
         #self.sound.play_bg()
          # set colors
@@ -180,7 +181,8 @@ class Game:
             gf.check_events(settings=self.settings, pacman = self.pacman)
             self.screen.fill(self.settings.bg_color)
             self.test_maze.draw(self.screen)
-            self.pacman.update(tiles=self.test_maze.tiles)
+            self.reg_points.draw(self.screen)
+            self.pacman.update(tiles=self.test_maze.tiles, reg_points=self.reg_points.reg_points)
             pg.display.flip()
 
 
