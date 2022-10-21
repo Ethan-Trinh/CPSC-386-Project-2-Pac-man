@@ -15,6 +15,7 @@ class MazeTile(Sprite):
     def draw(self, surface):
         surface.blit(self.image, (self.rect.x, self.rect.y))
         
+        
 class Maze():
     def __init__(self, filename, spritesheet):
         self.tile_size = 32
@@ -91,8 +92,8 @@ class Maze():
                     tiles.append(MazeTile('MW-RightUp.png', x * self.tile_size, y * self.tile_size, self.spritesheet))
                 elif tile == '21':
                     tiles.append(MazeTile('MW-UpRight.png', x * self.tile_size, y * self.tile_size, self.spritesheet))
-                    
                 x += 1
             y  += 1
         self.map_w, self.map_h = x * self.tile_size, y * self.tile_size
         return tiles
+    
