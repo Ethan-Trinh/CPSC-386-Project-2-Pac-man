@@ -10,6 +10,7 @@ from spritesheet import Spritesheet
 from timer import Timer
 from sound import Sounds
 import time
+from scoreboard import Scoreboard
 
 class Game:
     def __init__(self):
@@ -19,6 +20,7 @@ class Game:
         self.screen = pg.display.set_mode(size=size)
         pg.display.set_caption("Portal Pacman")
         self.pacman = Pacman(settings=self.settings, screen=self.screen)
+        self.scoreboard = Scoreboard(self)
         
         self.test_maze = Maze('test_level.csv', Spritesheet("images/PacmanWalls.png"))
         self.reg_points = Points('test_level.csv', self)
@@ -195,6 +197,7 @@ class Game:
             self.reg_points.draw(self.screen)
             self.reg_points.update()
             self.pacman.update(tiles=self.test_maze.tiles, reg_points=self.reg_points.reg_points)
+            self.scoreboard.update()
             pg.display.flip()
 
 
