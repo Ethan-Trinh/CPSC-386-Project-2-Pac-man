@@ -14,13 +14,17 @@ class PointTile(Sprite):
     def draw(self, surface):
         surface.blit(self.image, (self.rect.x, self.rect.y))
         
+    def collected(self):
+        print("nom nom")
+        
 class Points():
-    def __init__(self, filename):
+    def __init__(self, filename, game):
         self.tile_size = 32
         self.start_x, self.start_y = 0, 0
         self.reg_points = self.load_reg_points(filename)
         self.map_surface = pg.Surface((self.map_w, self.map_h))
         self.map_surface.set_colorkey((0, 0, 0))
+        self.pacman = game.pacman 
         self.load_map()
               
     def draw(self, screen):
@@ -51,3 +55,12 @@ class Points():
             y += 1
         self.map_w, self.map_h = x * self.tile_size, y * self.tile_size
         return reg_points
+    
+    def check_collect(self):
+        col = pg.sprite.spritecollide(self.pacman, self.reg_points, False)
+        if col:
+            for point in col:
+                point.collected()
+        
+    def update(self):
+        self.check_collect()
