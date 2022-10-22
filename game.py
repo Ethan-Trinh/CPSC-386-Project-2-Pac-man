@@ -26,7 +26,8 @@ class Game:
 
 
     def game_intro(self):
-        #self.sound.play_bg()
+        intro_sounds = pg.mixer.Channel(0)
+        intro_sounds.play(self.sound.intro_screen_music)
          # set colors
         intro_images = [pg.image.load(f'images/intro/intro_{n}.png') for n in range(0, 97)]
         timer = Timer(image_list=intro_images)
@@ -83,6 +84,7 @@ class Game:
                         pg.quit() 
                     elif width/2-140 <= mouse[0] <= width/2 and (height/2)+(height/4) <= mouse[1] <= (height/2)+40+(height/4):
                         # quits atm
+                        intro_sounds.stop()
                         self.play()
                     elif width/2-100 <= mouse[0] <= width/2+40 and height/2+(height/3) <= mouse[1] <= height/2+40+(height/3):
                         self.screen.fill(self.settings.bg_color)

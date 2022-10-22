@@ -9,6 +9,7 @@ class Sounds:
         self.munch_sound_2 = pg.mixer.Sound('sounds/munch_2.wav') 
         self.death_sound = pg.mixer.Sound('sounds/death.wav')
         self.game_start_sound = pg.mixer.Sound('sounds/game_start.wav')
+        self.intro_screen_music = pg.mixer.Sound('sounds/PacMan (Electro 2014 Remix).wav')
 
         pg.mixer.music.load('sounds/siren_2.wav')
         pg.mixer.music.set_volume(0.1)
@@ -20,6 +21,10 @@ class Sounds:
 
     def stop_music(self):
         pg.mixer.music.stop()
+    def play_intro_sound(self):
+        pg.mixer.Sound.play(self.intro_screen_music)
+        self.stop_music()
+        
 
     def munch_sound(self):
         if self.alternate_munch == 0:
