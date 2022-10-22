@@ -23,11 +23,12 @@ class Game:
         self.test_maze = Maze('test_level.csv', Spritesheet("images/PacmanWalls.png"))
         self.reg_points = Points('test_level.csv', self)
         self.sound = Sounds()
+        self.intro_sounds = intro_sounds = pg.mixer.Channel(0)
 
 
     def game_intro(self):
-        intro_sounds = pg.mixer.Channel(0)
-        intro_sounds.play(self.sound.intro_screen_music)
+        
+        self.intro_sounds.play(self.sound.intro_screen_music)
          # set colors
         intro_images = [pg.image.load(f'images/intro/intro_{n}.png') for n in range(0, 97)]
         timer = Timer(image_list=intro_images)
@@ -65,8 +66,7 @@ class Game:
         highscores = smallerfont.render('high scores', True, color)
         pacman_text = titlefont.render('PaCmAn', True, yellow )
         portal_text = subtitlefont.render('pOrTaL', True, blue)
-        #point values
-        #images
+      
 
         #for button interaction
         while True: 
@@ -84,7 +84,7 @@ class Game:
                         pg.quit() 
                     elif width/2-140 <= mouse[0] <= width/2 and (height/2)+(height/4) <= mouse[1] <= (height/2)+40+(height/4):
                         # quits atm
-                        intro_sounds.stop()
+                        self.intro_sounds.stop()
                         self.play()
                     elif width/2-100 <= mouse[0] <= width/2+40 and height/2+(height/3) <= mouse[1] <= height/2+40+(height/3):
                         self.screen.fill(self.settings.bg_color)
@@ -162,6 +162,7 @@ class Game:
                         pg.quit() 
                     elif width/2-140 <= mouse[0] <= width/2 and (height/2)+(height/4)+60 <= mouse[1] <= (height/2)+40+(height/4)+60:
                         # quits atm
+                        self.intro_sounds.stop()
                         self.play()
             mouse = pg.mouse.get_pos()
             if width/2 <= mouse[0] <= width/2+140 and height/2+(height/4)+60 <= mouse[1] <= height/2+40+(height/4)+60: 
