@@ -185,7 +185,9 @@ class Game:
     def reset(self):
         pass
     def game_over(self):
-        pass
+        self.reset()
+        self.high_scores_menu()
+        
     def play(self):
         self.sound.start_sound()
         time.sleep(4)
