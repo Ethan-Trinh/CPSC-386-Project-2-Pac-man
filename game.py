@@ -19,7 +19,7 @@ class Game:
         self.pacman = Pacman(settings=self.settings, screen=self.screen)
         
         self.test_maze = Maze('test_level.csv', Spritesheet("images/PacmanWalls.png"))
-        self.reg_points = Points('test_level.csv')
+        self.reg_points = Points('test_level.csv', self)
     def game_intro(self):
         #self.sound.play_bg()
          # set colors
@@ -182,6 +182,7 @@ class Game:
             self.screen.fill(self.settings.bg_color)
             self.test_maze.draw(self.screen)
             self.reg_points.draw(self.screen)
+            self.reg_points.update()
             self.pacman.update(tiles=self.test_maze.tiles, reg_points=self.reg_points.reg_points)
             pg.display.flip()
 
