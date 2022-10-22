@@ -8,6 +8,8 @@ from maze import Maze
 from points import Points
 from spritesheet import Spritesheet
 from timer import Timer
+from sound import Sounds
+import time
 
 class Game:
     def __init__(self):
@@ -20,6 +22,9 @@ class Game:
         
         self.test_maze = Maze('test_level.csv', Spritesheet("images/PacmanWalls.png"))
         self.reg_points = Points('test_level.csv', self)
+        self.sound = Sounds()
+
+
     def game_intro(self):
         #self.sound.play_bg()
          # set colors
@@ -177,7 +182,10 @@ class Game:
     def game_over(self):
         pass
     def play(self):
+        self.sound.start_sound()
+        time.sleep(4)
         while True:
+            self.sound.play_bgm()
             gf.check_events(settings=self.settings, pacman = self.pacman)
             self.screen.fill(self.settings.bg_color)
             self.test_maze.draw(self.screen)

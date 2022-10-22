@@ -4,12 +4,13 @@ import time
 class Sounds:
     def __init__(self):
         pg.mixer.init()
-        bgm = pg.mixer.Sound('sounds/siren_1.wav')
+        #bgm = pg.mixer.Sound('sounds/siren_1.wav')
         self.munch_sound_1 = pg.mixer.Sound('sounds/munch_1.wav')
         self.munch_sound_2 = pg.mixer.Sound('sounds/munch_2.wav') 
         self.death_sound = pg.mixer.Sound('sounds/death.wav')
+        self.game_start_sound = pg.mixer.Sound('sounds/game_start.wav')
 
-        pg.mixer.music.load(bgm)
+        pg.mixer.music.load('sounds/siren_2.wav')
         pg.mixer.music.set_volume(0.1)
 
         self.alternate_munch = 0
@@ -28,7 +29,13 @@ class Sounds:
             pg.mixer.Sound.play(self.munch_sound_2)
             self.alternate_munch -= 1
 
+    def start_sound(self):
+        self.stop_music()
+        pg.mixer.Sound.play(self.game_start_sound)
+        self.stop_music()
+
     def dead_sound(self):
         self.stop_music()
         pg.mixer.Sound.play(self.death_sound)
+        self.stop_music()
         
