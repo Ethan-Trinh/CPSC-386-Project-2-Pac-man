@@ -52,7 +52,7 @@ class Pacman(Sprite):
 
     def starting_point(self):
         self.rect.centerx = self.screen_rect.centerx
-        self.rect.centery = self.screen_rect.centery
+        self.rect.centery = self.screen_rect.centery +125
         return Vector(self.rect.left, self.rect.top)
 
 
