@@ -80,14 +80,15 @@ class Pacman(Sprite):
         self.check_y_collisions(tiles)
         
         self.posn += self.vel
-        if prev_posn_x < self.posn.x:
-            self.timer = self.timer_right
-        elif prev_posn_x > self.posn.x:
-            self.timer = self.timer_left
-        elif prev_posn_y > self.posn.y:
-            self.timer = self.timer_up
-        elif prev_posn_y < self.posn.y:
-            self.timer = self.timer_down
+        if self.timer != self.timer_death:
+            if prev_posn_x < self.posn.x:
+                self.timer = self.timer_right
+            elif prev_posn_x > self.posn.x:
+                self.timer = self.timer_left
+            elif prev_posn_y > self.posn.y:
+                self.timer = self.timer_up
+            elif prev_posn_y < self.posn.y:
+                self.timer = self.timer_down
 
         self.posn, self.rect = clamp(self.posn, self.rect, self.settings)
         self.draw()
