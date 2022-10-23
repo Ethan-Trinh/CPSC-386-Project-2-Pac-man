@@ -66,5 +66,5 @@ class Scoreboard:
                 file.seek(0,0)
                 file.write(str(self.high_score)+"\n")
                 file.write(lines)
-                file.truncate()
+                
   
