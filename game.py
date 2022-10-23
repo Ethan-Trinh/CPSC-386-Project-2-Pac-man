@@ -5,8 +5,12 @@ from settings import Settings
 from pacman import Pacman
 import game_functions as gf
 from maze import Maze
+from points import Points
 from spritesheet import Spritesheet
 from timer import Timer
+from sound import Sounds
+import time
+from scoreboard import Scoreboard
 
 class Game:
     def __init__(self):
@@ -16,11 +20,17 @@ class Game:
         self.screen = pg.display.set_mode(size=size)
         pg.display.set_caption("Portal Pacman")
         self.pacman = Pacman(settings=self.settings, screen=self.screen)
+        self.scoreboard = Scoreboard(self)
         
         self.test_maze = Maze('test_level.csv', Spritesheet("images/PacmanWalls.png"))
+        self.reg_points = Points('test_level.csv', self)
+        self.sound = Sounds()
+        self.intro_sounds = intro_sounds = pg.mixer.Channel(0)
+
 
     def game_intro(self):
-        #self.sound.play_bg()
+
+        self.intro_sounds.play(self.sound.intro_screen_music)
          # set colors
         intro_images = [pg.image.load(f'images/intro/intro_{n}.png') for n in range(0, 97)]
         timer = Timer(image_list=intro_images)
@@ -58,8 +68,7 @@ class Game:
         highscores = smallerfont.render('high scores', True, color)
         pacman_text = titlefont.render('PaCmAn', True, yellow )
         portal_text = subtitlefont.render('pOrTaL', True, blue)
-        #point values
-        #images
+      
 
         #for button interaction
         while True: 
@@ -77,6 +86,7 @@ class Game:
                         pg.quit() 
                     elif width/2-140 <= mouse[0] <= width/2 and (height/2)+(height/4) <= mouse[1] <= (height/2)+40+(height/4):
                         # quits atm
+                        self.intro_sounds.stop()
                         self.play()
                     elif width/2-100 <= mouse[0] <= width/2+40 and height/2+(height/3) <= mouse[1] <= height/2+40+(height/3):
                         self.screen.fill(self.settings.bg_color)
@@ -137,7 +147,7 @@ class Game:
         with open('high_scores.txt') as file:
             while (line := file.readline().rstrip()):
                 old_high_scores.append(line)
-        for item in range(len(old_high_scores)):
+        for item in range(10):
             high_score_text = scorefont.render(old_high_scores[item], True, yellow)
             self.screen.blit(high_score_text,(score_width,start_height))
             start_height += 50
@@ -154,6 +164,7 @@ class Game:
                         pg.quit() 
                     elif width/2-140 <= mouse[0] <= width/2 and (height/2)+(height/4)+60 <= mouse[1] <= (height/2)+40+(height/4)+60:
                         # quits atm
+                        self.intro_sounds.stop()
                         self.play()
             mouse = pg.mouse.get_pos()
             if width/2 <= mouse[0] <= width/2+140 and height/2+(height/4)+60 <= mouse[1] <= height/2+40+(height/4)+60: 
@@ -170,17 +181,35 @@ class Game:
             pg.display.update()
         
         
-        
     def reset(self):
         pass
+
+
     def game_over(self):
-        pass
+        self.reset()
+        self.high_scores_menu()
+
+
     def play(self):
+        # Draw the Screen before the game begins
+        self.screen.fill(self.settings.bg_color)
+        self.test_maze.draw(self.screen)
+        self.reg_points.draw(self.screen)
+        self.pacman.draw()
+        pg.display.flip()
+
+        self.sound.start_sound()
+        time.sleep(4)
         while True:
+            self.sound.play_bgm()
             gf.check_events(settings=self.settings, pacman = self.pacman)
             self.screen.fill(self.settings.bg_color)
             self.test_maze.draw(self.screen)
-            self.pacman.update(tiles=self.test_maze.tiles)
+            self.reg_points.draw(self.screen)
+            self.reg_points.update()
+            self.pacman.update(tiles=self.test_maze.tiles, reg_points=self.reg_points.reg_points)
+            self.scoreboard.update()
+            # print(self.reg_points.level)
             pg.display.flip()
 
 
