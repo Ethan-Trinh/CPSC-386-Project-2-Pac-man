@@ -10,6 +10,7 @@ from points import Points
 from spritesheet import Spritesheet
 from timer import Timer
 from sound import Sounds
+from portal import Portals
 import time
 from scoreboard import Scoreboard
 from ghosts import Ghost
@@ -21,7 +22,8 @@ class Game:
         size = self.settings.screen_width, self.settings.screen_height   # tuple
         self.screen = pg.display.set_mode(size=size)
         pg.display.set_caption("Portal Pacman")
-        self.pacman = Pacman(settings=self.settings, screen=self.screen)
+        self.portals = Portals()
+        self.pacman = Pacman(settings=self.settings, screen=self.screen, game = self)
         self.scoreboard = Scoreboard(self)
         self.ghost_controller = GhostController(pacman=self.pacman, game=self)
         
@@ -216,7 +218,7 @@ class Game:
             self.test_maze.draw(self.screen)
             self.reg_points.draw(self.screen)
             self.reg_points.update()
-            self.pacman.update(tiles=self.test_maze.tiles, reg_points=self.reg_points.reg_points)
+            self.pacman.update(tiles=self.test_maze.tiles)
             self.scoreboard.update()
             self.ghost_controller.update(self.test_maze.tiles)
             # print(self.reg_points.level)
