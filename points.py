@@ -151,6 +151,7 @@ class Points():
             for point2 in col2:
                 point2.collected(type = point2.type)
                 self.sb.increment_score(50)
+                self.pacman.sound.eat_power_sound()
                 point2.kill()
         col3 = pg.sprite.spritecollide(self.pacman, self.fruit, False)
         if col3:
