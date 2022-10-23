@@ -117,13 +117,11 @@ class Pacman(Sprite):
         collisions = self.tile_check(tiles)
         for tile in collisions:
             if self.vel.x > 0: # moving right
-                
                 self.vel.x = 0
-                self.posn.x -= 2
+                self.posn.x -= 10
             elif self.vel.x < 0: # moving left
-                
                 self.vel.x = 0
-                self.posn.x += 2
+                self.posn.x += 10
             self.rect.x = self.posn.x
                 
     def check_y_collisions(self, tiles):
@@ -131,10 +129,10 @@ class Pacman(Sprite):
         for tile in collisions:
             if self.vel.y > 0: # moving up
                 self.vel.y = 0
-                self.posn.y -= 2
+                self.posn.y -= 10
             elif self.vel.y < 0: # moving down
                 self.vel.y = 0
-                self.posn.y += 2
+                self.posn.y += 10
             self.rect.y = self.posn.y
 
     def check_tunnel(self):
