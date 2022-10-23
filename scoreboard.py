@@ -12,12 +12,21 @@ class Scoreboard:
         self.screen = game.screen
         self.screen_rect = self.screen.get_rect()
 
-        self.text_color = (30, 30, 30)
+        self.text_color = (255,255,255)
         self.font = pg.font.SysFont(None, 48)
 
         self.score_image = None 
         self.score_rect = None
-
+        self.bordertop_image = pg.image.load('images/border/boardertop.png')
+        self.bordertop_rect = self.bordertop_image.get_rect()
+        self.borderbottom_image = pg.image.load('images/border/boardertop.png')
+        self.borderbottom_rect = self.borderbottom_image.get_rect()
+        self.sideleft_image = pg.image.load('images/border/boarderside.png')
+        self.sideleft_rect = self.sideleft_image.get_rect()
+        self.sideright_image = pg.image.load('images/border/boarderside.png')
+        self.sideright_rect = self.sideright_image.get_rect()
+        self.width = self.screen.get_width()
+        self.height = self.screen.get_height()
         self.get_high_score()
         self.prep_score()
         
@@ -28,12 +37,12 @@ class Scoreboard:
 
     def prep_score(self): 
         score_str = str(self.score)
-        self.score_image = self.font.render(score_str, True, self.text_color, (200,200,200))
+        self.score_image = self.font.render(score_str, True, self.text_color, (0,0,0))
         self.score_rect = self.score_image.get_rect()
         self.score_rect.right = self.screen_rect.right - 20
-        self.score_rect.top = 20
-
-
+        self.score_rect.top = 750
+   
+        
     def reset(self): 
         self.add_high_score()
         self.score = 0
@@ -47,6 +56,13 @@ class Scoreboard:
         self.draw()
 
     def draw(self): 
+        self.screen.blit(self.bordertop_image, (0,0))
+        self.screen.blit(self.borderbottom_image, ( 0,735))
+        self.screen.blit(self.borderbottom_image, ( 0,760))
+        self.screen.blit(self.sideleft_image, (0,20))
+        self.screen.blit(self.sideleft_image, (30,20))
+        self.screen.blit(self.sideright_image, (1160,20))
+        self.screen.blit(self.sideright_image, (1120,20))
         self.screen.blit(self.score_image, self.score_rect)
        
     def get_high_score(self):
