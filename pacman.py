@@ -5,10 +5,11 @@ from timer import Timer
 from vector import Vector
 from spritesheet import Spritesheet
 from sound import Sounds
+import game_functions as gf
 
 class Pacman(Sprite):
     pacman_images = [pg.image.load(f'images/pacmaneat/pacman{n}.png') for n in range(1, 5)]
-    pacman_death = [pg.image.load(f'images/pacmandie/pacmandie{n}.png') for n in range(1, 15)]
+    pacman_death = [pg.image.load(f'images/pacmandie/pacmandie{n}.png') for n in range(0, 15)]
     pacman_left = [pg.image.load(f'images/pacmandirections/pacmanl{n}.png') for n in range(0, 4)]
     pacman_right = [pg.image.load(f'images/pacmandirections/pacmanr{n}.png') for n in range(0, 4)]
     pacman_up = [pg.image.load(f'images/pacmandirections/pacmanu{n}.png') for n in range(0, 4)]
@@ -33,6 +34,7 @@ class Pacman(Sprite):
         self.pacman_right_scaled = [pg.transform.scale(Pacman.pacman_right[n], (40, 40)) for n in range (0, 4)]
         self.pacman_up_scaled = [pg.transform.scale(Pacman.pacman_up[n], (40, 40)) for n in range (0, 4)]
         self.pacman_down_scaled = [pg.transform.scale(Pacman.pacman_down[n], (40, 40)) for n in range (0, 4)]
+        self.pacman_death_scaled = [pg.transform.scale(Pacman.pacman_death[n], (40, 40)) for n in range (0, 15)]
 
         self.rect = self.image_scaled.get_rect() # use grabbing points
         
@@ -43,7 +45,7 @@ class Pacman(Sprite):
         self.timer_up = Timer(image_list=self.pacman_up_scaled)
         self.timer_down = Timer(image_list=self.pacman_down_scaled)
         self.timer_normal = Timer(image_list=self.pacman_images_scaled)
-        self.timer_death = Timer(image_list=Pacman.pacman_death, delay=100, is_loop=False)
+        self.timer_death = Timer(image_list=self.pacman_death_scaled, delay=100, is_loop=False)
         self.timer = self.timer_normal
 
         # Movement / Position Handling Variables
@@ -74,6 +76,12 @@ class Pacman(Sprite):
 
 
     def update(self, tiles, reg_points):
+        if self.dying == False:
+            gf.check_events(settings=self.settings, pacman = self)
+        elif self.dying == True:
+            self.vel.x = 0
+            self.vel.y = 0
+
         prev_posn_x = self.posn.x
         prev_posn_y = self.posn.y
         self.check_x_collisions(tiles)

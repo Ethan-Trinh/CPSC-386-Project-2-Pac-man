@@ -212,7 +212,6 @@ class Game:
         time.sleep(4)
         while True:
             self.sound.play_bgm()
-            gf.check_events(settings=self.settings, pacman = self.pacman)
             self.screen.fill(self.settings.bg_color)
             self.test_maze.draw(self.screen)
             self.reg_points.draw(self.screen)
