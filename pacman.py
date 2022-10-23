@@ -70,7 +70,8 @@ class Pacman(Sprite):
         self.hitbox.x = self.rect.x + self.rect.w/2.8
         self.hitbox.y = self.rect.y + self.rect.h/3
         # pg.draw.rect(surface = self.screen, color=(225,225,225), rect=self.hitbox)
-
+        self.check_tunnel()
+        
     def draw(self):
         image = self.timer.image()
         rect = image.get_rect()
@@ -106,4 +107,8 @@ class Pacman(Sprite):
                 self.posn.y += 2
             self.rect.y = self.posn.y
 
-            
+    def check_tunnel(self):
+        if self.vel.x > 0 and self.posn.x >= 1080:
+            self.posn.x = 64
+        if self.vel.x < 0 and self.posn.x <= 60:
+            self.posn.x = 1080
