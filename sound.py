@@ -48,9 +48,8 @@ class Sounds:
         pg.mixer.Sound.play(self.eat_ghost)
 
     def ghost_retreat(self):
-        pg.mixer.Sound.play(self.eat_power, loops = 5)
-    def ghost_retreat(self):
-        pg.mixer.Sound.play(self.eat_power, loops = 5)
+        pg.mixer.Sound.play(self.ghost_retreat_sound, loops = 5)
+
     def packman_die_sound(self):
         pg.mixer.Sound.play(self.death_sound)
 
