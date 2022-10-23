@@ -103,8 +103,8 @@ class Ghost(Sprite):
         x,y = self.get_current_tile()
         self.check_x_collisions(tiles)
         self.check_y_collisions(tiles)
-        self.check_x_collisions(tiles)
-        self.check_y_collisions(tiles)
+
+        self.check_tunnel()
         #print(f'ghost is on {x}, {y}')
         # Did this update cause us to hit a wall?
         self.posn += self.vel 
@@ -144,7 +144,11 @@ class Ghost(Sprite):
                 self.posn.y += 2
             self.rect.y = self.posn.y
             self.update_direction_x()
-
+    def check_tunnel(self):
+        if self.vel.x > 0 and self.posn.x >= 1080:
+            self.posn.x = 64
+        if self.vel.x < 0 and self.posn.x <= 60:
+            self.posn.x = 1080
     def check_pacman_collisions(self):
         collisions = self.rect.colliderect(self.pacman)
         if collisions:
