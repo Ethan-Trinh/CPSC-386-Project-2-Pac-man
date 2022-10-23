@@ -140,6 +140,7 @@ class Game:
         score_width = width/2 -100
         start_height = height/6
         old_high_scores = []
+        high_scores = []
         smallfont = pg.font.SysFont('Corbel',35)
         quit = smallfont.render('quit' , True , color) 
         play = smallfont.render('play' , True , color)
@@ -147,8 +148,14 @@ class Game:
         with open('high_scores.txt') as file:
             while (line := file.readline().rstrip()):
                 old_high_scores.append(line)
-        for item in range(10):
-            high_score_text = scorefont.render(old_high_scores[item], True, yellow)
+        if len(old_high_scores) > 10:
+            for item in range(10):
+                high_scores.append(old_high_scores[item])
+        else:
+            for item in range(len(old_high_scores)):
+                high_scores.append(old_high_scores[item])
+        for item in range(len(high_scores)):
+            high_score_text = scorefont.render(high_scores[item], True, yellow)
             self.screen.blit(high_score_text,(score_width,start_height))
             start_height += 50
         mouse = pg.mouse.get_pos() 
