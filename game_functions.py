@@ -16,15 +16,12 @@ movement = {pg.K_LEFT: Vector(-1, 0),   # dictionary to map keys to Vector veloc
 def check_keydown_events(event, settings, pacman):
     key = event.key
     if key in movement.keys(): pacman.vel += settings.pac_speed * movement[key]
-    elif key == pg.K_SPACE:
-        pacman.shoot = True
 
 
 def check_keyup_events(event, pacman):
     key = event.key
     if key in movement.keys(): pacman.vel = Vector()   # Lifting key should stop pacman
-    elif key == pg.K_SPACE:
-        pacman.shoot = False
+
 
 def check_events(settings, pacman):
     for event in pg.event.get():
