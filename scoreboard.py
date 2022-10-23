@@ -1,5 +1,6 @@
 import pygame as pg 
 from fileinput import FileInput
+import os
 
 class Scoreboard:
     def __init__(self, game): 
@@ -59,9 +60,11 @@ class Scoreboard:
     def add_high_score(self):
         with open('high_scores.txt', 'r+') as file:
             lines = file.read()
+            length= len(lines)
             old_high_score = lines.split('\n', 1)[0]
             if int(old_high_score)< self.high_score:
                 file.seek(0,0)
-                file.write(str(self.high_score))
+                file.write(str(self.high_score)+"\n")
+                file.write(lines)
                 file.truncate()
-
+  
