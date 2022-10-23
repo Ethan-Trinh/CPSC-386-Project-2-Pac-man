@@ -48,6 +48,7 @@ class Points():
         self.map_surface = pg.Surface((self.map_w, self.map_h))
         self.map_surface.set_colorkey((0, 0, 0))
         self.pacman = game.pacman 
+        self.sb = game.scoreboard
         self.load_map()
               
     def draw(self, screen):
@@ -127,21 +128,25 @@ class Points():
         if col:
             for point in col:
                 point.collected(point.type)
+                self.sb.increment_score(10)
                 point.kill()
         col2 = pg.sprite.spritecollide(self.pacman, self.p_points, False)
         if col2:
             for point2 in col2:
                 point2.collected(type = point2.type)
+                self.sb.increment_score(50)
                 point2.kill()
         col3 = pg.sprite.spritecollide(self.pacman, self.fruit, False)
         if col3:
             for point3 in col3:
                 point3.collected(type = point3.type)
+                self.sb.increment_score(100)
                 point3.kill()
         col4 = pg.sprite.spritecollide(self.pacman, self.milkshake, False)
         if col4:
             for point4 in col4:
                 point4.collected(type = point4.type)
+                self.sb.increment_score(500)
                 point4.kill()
         
     def update(self):
