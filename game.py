@@ -201,6 +201,8 @@ class Game:
 
     def game_over(self):
         self.reset()
+        self.pacman.reset()
+
         self.high_scores_menu()
 
 
