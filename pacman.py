@@ -4,6 +4,7 @@ from game_functions import check_keydown_events, clamp
 from timer import Timer
 from vector import Vector
 from spritesheet import Spritesheet
+from sound import Sounds
 
 class Pacman(Sprite):
     pacman_images = [pg.image.load(f'images/pacmaneat/pacman{n}.png') for n in range(1, 5)]
@@ -14,7 +15,7 @@ class Pacman(Sprite):
         self.settings = settings
         self.screen = screen
         self.screen_rect = screen.get_rect()
-        #self.sound = sound
+        self.sound = Sounds()
         self.lives = 3
         self.dying = False
         self.dead = False

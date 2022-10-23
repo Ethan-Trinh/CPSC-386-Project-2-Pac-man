@@ -29,7 +29,7 @@ class Game:
 
 
     def game_intro(self):
-        
+
         self.intro_sounds.play(self.sound.intro_screen_music)
          # set colors
         intro_images = [pg.image.load(f'images/intro/intro_{n}.png') for n in range(0, 97)]

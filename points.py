@@ -144,6 +144,7 @@ class Points():
             for point in col:
                 point.collected(point.type)
                 self.sb.increment_score(10)
+                self.pacman.sound.munch_sound()
                 point.kill()
         col2 = pg.sprite.spritecollide(self.pacman, self.p_points, False)
         if col2:
@@ -156,12 +157,14 @@ class Points():
             for point3 in col3:
                 point3.collected(type = point3.type)
                 self.sb.increment_score(100)
+                self.pacman.sound.eat_fruit_sound()
                 point3.kill()
         col4 = pg.sprite.spritecollide(self.pacman, self.milkshake, False)
         if col4:
             for point4 in col4:
                 point4.collected(type = point4.type)
                 self.sb.increment_score(500)
+                self.pacman.sound.eat_fruit_sound()
                 point4.kill()
         
     def update(self):

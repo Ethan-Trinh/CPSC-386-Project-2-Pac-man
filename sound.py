@@ -35,10 +35,13 @@ class Sounds:
         else:
             pg.mixer.Sound.play(self.munch_sound_2)
             self.alternate_munch -= 1
+            
     def eat_power_sound(self):
          pg.mixer.Sound.play(self.eat_power)
+
     def eat_fruit_sound(self):
         pg.mixer.Sound.play(self.eat_fruit)
+
     def eat_ghost(self):
         pg.mixer.Sound.play(self.eat_ghost)
 
