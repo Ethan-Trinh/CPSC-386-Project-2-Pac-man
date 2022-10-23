@@ -9,6 +9,11 @@ from sound import Sounds
 class Pacman(Sprite):
     pacman_images = [pg.image.load(f'images/pacmaneat/pacman{n}.png') for n in range(1, 5)]
     pacman_death = [pg.image.load(f'images/pacmandie/pacmandie{n}.png') for n in range(1, 15)]
+    pacman_left = [pg.image.load(f'images/pacmandirections/pacmanl{n}.png') for n in range(0, 4)]
+    pacman_right = [pg.image.load(f'images/pacmandirections/pacmanr{n}.png') for n in range(0, 4)]
+    pacman_up = [pg.image.load(f'images/pacmandirections/pacmanu{n}.png') for n in range(0, 4)]
+    pacman_down = [pg.image.load(f'images/pacmandirections/pacmand{n}.png') for n in range(0, 4)]
+
 
     def __init__(self, settings, screen):#, sound):
         super().__init__()
@@ -24,9 +29,19 @@ class Pacman(Sprite):
         self.image = pg.image.load('images/pacmaneat/pacman1.png')
         self.image_scaled = pg.transform.scale(self.image, (40, 40))
         self.pacman_images_scaled = [pg.transform.scale(Pacman.pacman_images[n], (40, 40)) for n in range (0, 4)]
+        self.pacman_left_scaled = [pg.transform.scale(Pacman.pacman_left[n], (40, 40)) for n in range (0, 4)]
+        self.pacman_right_scaled = [pg.transform.scale(Pacman.pacman_right[n], (40, 40)) for n in range (0, 4)]
+        self.pacman_up_scaled = [pg.transform.scale(Pacman.pacman_up[n], (40, 40)) for n in range (0, 4)]
+        self.pacman_down_scaled = [pg.transform.scale(Pacman.pacman_down[n], (40, 40)) for n in range (0, 4)]
+
         self.rect = self.image_scaled.get_rect() # use grabbing points
+        
         self.hitbox = self.rect # use for the ghosts and moving through the maze
         
+        self.timer_left = Timer(image_list=self.pacman_left_scaled)
+        self.timer_right = Timer(image_list=self.pacman_right_scaled)
+        self.timer_up = Timer(image_list=self.pacman_up_scaled)
+        self.timer_down = Timer(image_list=self.pacman_down_scaled)
         self.timer_normal = Timer(image_list=self.pacman_images_scaled)
         self.timer_death = Timer(image_list=Pacman.pacman_death, delay=100, is_loop=False)
         self.timer = self.timer_normal
@@ -59,9 +74,21 @@ class Pacman(Sprite):
 
 
     def update(self, tiles, reg_points):
+        prev_posn_x = self.posn.x
+        prev_posn_y = self.posn.y
         self.check_x_collisions(tiles)
         self.check_y_collisions(tiles)
+        
         self.posn += self.vel
+        if prev_posn_x < self.posn.x:
+            self.timer = self.timer_right
+        elif prev_posn_x > self.posn.x:
+            self.timer = self.timer_left
+        elif prev_posn_y > self.posn.y:
+            self.timer = self.timer_up
+        elif prev_posn_y < self.posn.y:
+            self.timer = self.timer_down
+
         self.posn, self.rect = clamp(self.posn, self.rect, self.settings)
         self.draw()
         # The hitbox is for pacman moving in the maze so he can be closer to the wall without
@@ -90,9 +117,11 @@ class Pacman(Sprite):
         collisions = self.tile_check(tiles)
         for tile in collisions:
             if self.vel.x > 0: # moving right
+                
                 self.vel.x = 0
                 self.posn.x -= 2
             elif self.vel.x < 0: # moving left
+                
                 self.vel.x = 0
                 self.posn.x += 2
             self.rect.x = self.posn.x
