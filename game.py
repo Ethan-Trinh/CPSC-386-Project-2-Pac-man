@@ -1,6 +1,7 @@
 #Running Page
 import sys
 import pygame as pg
+from ghosts import GhostController
 from settings import Settings
 from pacman import Pacman
 import game_functions as gf
@@ -11,6 +12,7 @@ from timer import Timer
 from sound import Sounds
 import time
 from scoreboard import Scoreboard
+from ghosts import Ghost
 
 class Game:
     def __init__(self):
@@ -21,6 +23,7 @@ class Game:
         pg.display.set_caption("Portal Pacman")
         self.pacman = Pacman(settings=self.settings, screen=self.screen)
         self.scoreboard = Scoreboard(self)
+        self.ghost_controller = GhostController(pacman=self.pacman, game=self)
         
         self.test_maze = Maze('test_level.csv', Spritesheet("images/PacmanWalls.png"))
         self.reg_points = Points('test_level.csv', self)
@@ -216,6 +219,7 @@ class Game:
             self.reg_points.update()
             self.pacman.update(tiles=self.test_maze.tiles, reg_points=self.reg_points.reg_points)
             self.scoreboard.update()
+            self.ghost_controller.update(self.test_maze.tiles)
             # print(self.reg_points.level)
             pg.display.flip()
 
