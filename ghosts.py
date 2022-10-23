@@ -99,7 +99,6 @@ class Ghost(Sprite):
     
     def update(self,tiles):
         self.check_edges()
-        print(self.vel)
         hitx,hity = False,False
         x,y = self.get_current_tile()
         self.check_x_collisions(tiles)
@@ -149,6 +148,7 @@ class Ghost(Sprite):
     def check_pacman_collisions(self):
         collisions = self.rect.colliderect(self.pacman)
         if collisions:
+            print("I ATE PAC")
             self.pacman.hit()
 
 
@@ -207,5 +207,5 @@ class GhostController():
 
     def update(self,tiles):
         for ghost in self.ghost_group:
-            #ghost.check_pacman_collisions()
+            ghost.check_pacman_collisions()
             ghost.update(tiles)
