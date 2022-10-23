@@ -196,12 +196,13 @@ class Game:
         
         
     def reset(self):
+        self.pacman.reset()
+        self.scoreboard.reset()
         pass
 
 
     def game_over(self):
         self.reset()
-        self.pacman.reset()
 
         self.high_scores_menu()
 
