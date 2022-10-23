@@ -11,7 +11,8 @@ class Portals:
         self.portals.empty()
         self.portals_up = False
         
-    def shoot(self, spawn_point, direction): pass
+    def shoot(self): 
+        print('*portal noises*')
         
     
 class Portal(Sprite):

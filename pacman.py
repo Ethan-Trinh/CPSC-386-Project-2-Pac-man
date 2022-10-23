@@ -16,7 +16,7 @@ class Pacman(Sprite):
     pacman_down = [pg.image.load(f'images/pacmandirections/pacmand{n}.png') for n in range(0, 4)]
 
 
-    def __init__(self, settings, screen):#, sound):
+    def __init__(self, settings, screen, game):#, sound):
         super().__init__()
         self.settings = settings
         self.screen = screen
@@ -25,6 +25,8 @@ class Pacman(Sprite):
         self.lives = 3
         self.dying = False
         self.dead = False
+        self.shoot = False
+        self.portals = game.portals
 
         # Image / Animation Variables
         self.image = pg.image.load('images/pacmaneat/pacman1.png')
@@ -75,7 +77,7 @@ class Pacman(Sprite):
         self.timer_death.reset()
 
 
-    def update(self, tiles, reg_points):
+    def update(self, tiles):
         if self.dying == False:
             gf.check_events(settings=self.settings, pacman = self)
         elif self.dying == True:
@@ -108,6 +110,10 @@ class Pacman(Sprite):
         self.hitbox.y = self.rect.y + self.rect.h/3
         # pg.draw.rect(surface = self.screen, color=(225,225,225), rect=self.hitbox)
         self.check_tunnel()
+        if self.shoot:
+            print('pew pew')
+            self.portals.shoot()
+            self.shoot = False
         
     def draw(self):
         image = self.timer.image()
