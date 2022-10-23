@@ -79,6 +79,7 @@ class Pacman(Sprite):
         if self.dying == False:
             gf.check_events(settings=self.settings, pacman = self)
         elif self.dying == True:
+            self.sound.packman_die_sound()
             self.vel.x = 0
             self.vel.y = 0
 
