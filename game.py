@@ -181,14 +181,23 @@ class Game:
             pg.display.update()
         
         
-        
     def reset(self):
         pass
+
+
     def game_over(self):
         self.reset()
         self.high_scores_menu()
-        
+
+
     def play(self):
+        # Draw the Screen before the game begins
+        self.screen.fill(self.settings.bg_color)
+        self.test_maze.draw(self.screen)
+        self.reg_points.draw(self.screen)
+        self.pacman.draw()
+        pg.display.flip()
+
         self.sound.start_sound()
         time.sleep(4)
         while True:
