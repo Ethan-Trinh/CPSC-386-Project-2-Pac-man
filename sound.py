@@ -10,7 +10,9 @@ class Sounds:
         self.death_sound = pg.mixer.Sound('sounds/death.wav')
         self.game_start_sound = pg.mixer.Sound('sounds/game_start.wav')
         self.intro_screen_music = pg.mixer.Sound('sounds/PacMan (Electro 2014 Remix).wav')
-
+        self.eat_power=  pg.mixer.Sound('sounds/power_pellet.wav')
+        self.eat_fruit=  pg.mixer.Sound('sounds/eat_fruit.wav')
+        self.eat_ghost=  pg.mixer.Sound('sounds/eat_ghost.wav')
         pg.mixer.music.load('sounds/siren_2.wav')
         pg.mixer.music.set_volume(0.1)
 
@@ -33,6 +35,12 @@ class Sounds:
         else:
             pg.mixer.Sound.play(self.munch_sound_2)
             self.alternate_munch -= 1
+    def eat_power_sound(self):
+         pg.mixer.Sound.play(self.eat_power)
+    def eat_fruit_sound(self):
+        pg.mixer.Sound.play(self.eat_fruit)
+    def eat_ghost(self):
+        pg.mixer.Sound.play(self.eat_ghost)
 
     def start_sound(self):
         self.stop_music()

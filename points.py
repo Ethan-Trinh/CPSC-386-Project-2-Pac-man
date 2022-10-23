@@ -13,6 +13,8 @@ class PointTile(Sprite):
         self.rect.x, self.rect.y = x, y
         self.type = type
         self.eaten = False
+
+        
     
     def draw(self, surface):
         surface.blit(self.image, (self.rect.x, self.rect.y))
@@ -22,6 +24,7 @@ class PointTile(Sprite):
         
     def collected(self, type):
         if type == 'reg':
+
             print("nom nom")
         elif type == 'pow':
             print("big nom nom")    
