@@ -2,7 +2,6 @@ import pygame as pg
 import csv, os
 from pygame.sprite import Sprite, Group
 from spritesheet import Spritesheet
-from pacman import Pacman
 from random import randint
 
 class PointTile(Sprite):
@@ -52,6 +51,8 @@ class Points():
         self.map_surface.set_colorkey((0, 0, 0))
         self.pacman = game.pacman 
         self.sb = game.scoreboard
+        self.level = 1
+        print(self.level)
         self.load_map()
               
     def draw(self, screen):
@@ -108,6 +109,17 @@ class Points():
         self.map_w, self.map_h = x * self.tile_size, y * self.tile_size
         return power_points    
     
+    def reset(self):
+        # empty the point arrays
+        self.r_points.empty()
+        self.p_points.empty()
+        self.fruit.empty()
+        self.milkshake.empty()
+        # remake the map
+        self.load_map()
+        
+        
+    
     def fruit_spawn(self):
         spawn_chance = 500
         out_of = randint(0, 5000)
@@ -158,3 +170,7 @@ class Points():
             self.fruit_spawn()
         if not self.milkshake:
             self.milkshake_spawn()
+        # testing the reset
+        if not self.p_points:
+            self.reset()
+            self.level += 1

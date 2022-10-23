@@ -200,6 +200,7 @@ class Game:
             self.reg_points.update()
             self.pacman.update(tiles=self.test_maze.tiles, reg_points=self.reg_points.reg_points)
             self.scoreboard.update()
+            # print(self.reg_points.level)
             pg.display.flip()
 
 
