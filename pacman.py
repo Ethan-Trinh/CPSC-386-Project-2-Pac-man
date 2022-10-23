@@ -26,6 +26,7 @@ class Pacman(Sprite):
         self.dying = False
         self.dead = False
         self.shoot = False
+        self.game=game
         self.portals = game.portals
 
         # Image / Animation Variables
@@ -71,9 +72,13 @@ class Pacman(Sprite):
         print(f'Pac Man died, {self.lives} lives remaining')
 
     def reset(self):
+        self.really_dead()
+        if self.lives < 1:
+            self.game.game_over()
         self.dying = False
         self.dead = False
         self.timer = self.timer_normal
+        self.posn = self.starting_point()
         self.timer_death.reset()
 
 
@@ -116,6 +121,10 @@ class Pacman(Sprite):
             self.shoot = False
         
     def draw(self):
+        if self.timer.is_expired():
+            self.timer = self.timer_normal
+            self.reset()
+            self.sound.stop_music()
         image = self.timer.image()
         rect = image.get_rect()
         rect.left, rect.top = self.rect.left, self.rect.top

@@ -129,6 +129,7 @@ class Game:
             pg.display.update() 
         
     def high_scores_menu(self):
+        self.intro_sounds.play(self.sound.intermission)
         pg.display.flip()
         self.screen.fill((0,0,0))
         scorefont = pg.font.Font('fonts/scorefont.ttf', 70)
@@ -147,7 +148,7 @@ class Game:
         old_high_scores = []
         high_scores = []
         smallfont = pg.font.SysFont('Corbel',35)
-        quit = smallfont.render('quit' , True , color) 
+        quit = smallfont.render('menu' , True , color) 
         play = smallfont.render('play' , True , color)
         title = titlefont.render('HIGH SCORES', True,blue)
         with open('high_scores.txt') as file:
@@ -172,8 +173,9 @@ class Game:
                 if ev.type == pg.MOUSEBUTTONDOWN: 
             #if the mouse is clicked on the 
             # button the game is terminated 
-                    if width/2 <= mouse[0] <= width/2+140 and height/2+(height/4)+60 <= mouse[1] <= height/2+40+(height/4)+60: 
-                        pg.quit() 
+                    if width/2 <= mouse[0] <= width/2+140 and height/2+(height/4)+60 <= mouse[1] <= height/2+40+(height/4)+60:
+                        self.intro_sounds.stop() 
+                        self.game_intro()
                     elif width/2-140 <= mouse[0] <= width/2 and (height/2)+(height/4)+60 <= mouse[1] <= (height/2)+40+(height/4)+60:
                         # quits atm
                         self.intro_sounds.stop()
@@ -187,7 +189,7 @@ class Game:
                 pg.draw.rect(self.screen,color_dark,[width/2,height/2+(height/4)+60,140,40])
                 pg.draw.rect(self.screen,color_dark,[width/2-180,(height/2)+(height/4)+60,140,40])
                 
-            self.screen.blit(quit , (width/2+40,height/2+(height/4)+60))
+            self.screen.blit(quit , (width/2+30,height/2+(height/4)+60))
             self.screen.blit(play,(width/2+-140,height/2+(height/4)+60))
             self.screen.blit(title,(width/2-310,height/2-380))
             pg.display.update()
