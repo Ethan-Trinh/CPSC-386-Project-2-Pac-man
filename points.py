@@ -177,6 +177,6 @@ class Points():
         if not self.milkshake:
             self.milkshake_spawn()
         # testing the reset
-        if not self.p_points:
+        if not self.p_points and not self.r_points:
             self.reset()
             self.level += 1
