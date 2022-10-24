@@ -73,7 +73,8 @@ class Pacman(Sprite):
         print(f'Pac Man died, {self.lives} lives remaining')
 
     def reset(self):
-        self.really_dead()
+        if self.dying == True:
+            self.really_dead()
         if self.lives < 1:
             self.game.game_over()
         self.dying = False
@@ -90,6 +91,8 @@ class Pacman(Sprite):
             self.sound.packman_die_sound()
             self.vel.x = 0
             self.vel.y = 0
+        if self.lives <1 :
+            self.game.game_over()
 
         prev_posn_x = self.posn.x
         prev_posn_y = self.posn.y
