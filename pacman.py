@@ -96,7 +96,7 @@ class Pacman(Sprite):
             self.vel.y = 0
         if self.lives <1 :
             self.game.game_over()
-
+        self.portals.check_collisions(self.hitbox)
         prev_posn_x = self.posn.x
         prev_posn_y = self.posn.y
         self.check_x_collisions(tiles)

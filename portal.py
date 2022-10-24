@@ -16,7 +16,14 @@ class Portals:
         
     def shoot(self, game, x, y, facing): 
         self.portals.add(Portal(screen=game.screen, x=x+10, y=y+10, facing=facing))
-        
+    def check_collisions(self,pacman):
+        for portal in self.portals:
+            if portal.facing == 4:
+                collisions = portal.check_pacman(pacman)
+                if collisions:
+                    print("got a returnable collision")
+                    return portal.rect
+
     def update(self, tiles, pacman):
         self.portals.update(tiles, pacman)
         
@@ -93,6 +100,7 @@ class Portal(Sprite):
     
     def check_pacman(self, pacman):
         if self.rect.colliderect(pacman):
+            return True
             print('pacman was here')
 
     def draw(self):
