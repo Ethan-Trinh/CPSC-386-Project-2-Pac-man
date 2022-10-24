@@ -7,6 +7,9 @@ class Portals:
         self.portals = Group()
         self.portals_up = False
         
+    def up_port(self):
+        self.portals_up = True
+        
     def reset(self):
         self.portals.empty()
         self.portals_up = False
@@ -31,7 +34,7 @@ class Portal(Sprite):
         self.portal_timer = [pg.image.load(f'images/Portals/portal{n}.png') for n in range(4)]
         self.image = pg.image.load('images/Portals/portal0.png')
         self.rect = self.image.get_rect()
-        self.timer = Timer(image_list=self.portal_timer)
+        self.timer = Timer(image_list=self.portal_timer, delay=200)
         self.rect.centerx = x
         self.rect.bottom = y
         self.y = float(self.rect.y)
@@ -40,14 +43,17 @@ class Portal(Sprite):
     def update(self, facing):
         if facing == 0: # face right
             self.x += 1
+            self.rect.x = self.x
         elif facing == 1: # face left
             self.x -= 1
+            self.rect.x = self.x
         elif facing == 2: # face up
             self.y += 1
+            self.rect.y = self.y
         elif facing == 3: # face down
             self.y -= 1
-        
-        self.rect.x = self.x
+            self.rect.y = self.y
+    
         self.draw()
         
     def draw(self):
