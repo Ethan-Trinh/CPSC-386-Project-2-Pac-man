@@ -18,8 +18,8 @@ class Portals:
         self.portals.add(Portal(screen=game.screen, x=x, y=y, facing=facing))
         print('*portal noises*')
         
-    def update(self):
-        self.portals.update()
+    def update(self, tiles):
+        self.portals.update(tiles)
         
     def draw(self):
         for port in self.portals.sprites():
@@ -41,7 +41,7 @@ class Portal(Sprite):
         self.x = float(self.rect.x)
         self.facing = facing
         
-    def update(self):
+    def update(self, tiles):
         if self.facing == 0: # face right
             self.x += 1
             self.rect.x = self.x
@@ -54,9 +54,24 @@ class Portal(Sprite):
         elif self.facing == 3: # face down
             self.y += 1
             self.rect.y = self.y
+        elif self.facing == 4:
+            print("hit a wall")
+        
+        self.check_collision(tiles = tiles)
     
         self.draw()
 
+    def tile_check(self, tiles):
+        col = []
+        for tile in tiles:
+            if self.rect.colliderect(tile):
+                col.append(tile)
+        return col
+    
+    def check_collision(self, tiles):
+        collisions = self.tile_check(tiles)
+        for tile in collisions:
+            self.facing = 4
 
     def draw(self):
         image = self.timer.image()
