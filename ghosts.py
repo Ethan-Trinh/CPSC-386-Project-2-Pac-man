@@ -41,6 +41,7 @@ class Ghost(Sprite):
         self.sounds = Sounds()
         
         self.timer = Timer(image_list=self.sprite_left)
+        self.portals = game.portals
 
     def center_self(self):
         self.rect.centerx = self.screen_rect.centerx
@@ -111,6 +112,15 @@ class Ghost(Sprite):
         # Did this update cause us to hit a wall?
         self.posn += self.vel 
         
+        if self.portals.num > 2:
+            other_rect = self.portals.check_collisions(self.rect)
+            if other_rect != None:
+                self.portals.reset() 
+                print(self.rect)
+                print(other_rect)
+                #need to move pacman
+                self.posn.x = other_rect.x
+                self.posn.y=other_rect.y
         
         self.posn, self.rect = clamp(self.posn, self.rect, self.settings)
         self.draw()
