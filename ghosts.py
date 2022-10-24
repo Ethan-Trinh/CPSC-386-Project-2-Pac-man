@@ -8,6 +8,7 @@ from pacman import Pacman
 from timer import Timer
 from vector import Vector
 from game_functions import clamp
+import sound as Sound
 import random
 
 class Ghost(Sprite):
@@ -37,6 +38,7 @@ class Ghost(Sprite):
         self.pacman = pacman
         self.pacman_x = None
         self.pacman_y = None
+        self.sounds = Sound()
         
         self.timer = Timer(image_list=self.sprite_left)
 
