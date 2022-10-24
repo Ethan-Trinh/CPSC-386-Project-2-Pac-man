@@ -15,7 +15,7 @@ class Portals:
         self.portals_up = False
         
     def shoot(self, game, x, y, facing): 
-        self.portals.add(Portal(screen=game.screen, x=x, y=y, facing=facing))
+        self.portals.add(Portal(screen=game.screen, x=x+10, y=y+10, facing=facing))
         print('*portal noises*')
         
     def update(self, tiles):
@@ -34,9 +34,12 @@ class Portal(Sprite):
         self.portal_timer = [pg.image.load(f'images/Portals/portal{n}.png') for n in range(4)]
         self.image = pg.image.load('images/Portals/portal0.png')
         self.rect = self.image.get_rect()
+        self.hitbox = self.rect
+        self.hitbox.w = self.rect.w/4
+        self.hitbox.h = self.rect.h/4
         self.timer = Timer(image_list=self.portal_timer, delay=200)
-        self.rect.centerx = x
-        self.rect.bottom = y
+        self.rect.centerx = x-10
+        self.rect.bottom = y-10
         self.y = float(self.rect.y)
         self.x = float(self.rect.x)
         self.facing = facing
@@ -45,17 +48,25 @@ class Portal(Sprite):
         if self.facing == 0: # face right
             self.x += 1
             self.rect.x = self.x
+            self.hitbox.x = self.rect.centerx
+            
         elif self.facing == 1: # face left
             self.x -= 1
             self.rect.x = self.x
+            self.hitbox.x = self.rect.centerx
         elif self.facing == 2: # face up
             self.y -= 1
             self.rect.y = self.y
+            self.hitbox.y = self.rect.centery
         elif self.facing == 3: # face down
             self.y += 1
             self.rect.y = self.y
+            self.hitbox.y = self.rect.centery
         elif self.facing == 4:
             print("hit a wall")
+        
+        
+        pg.draw.rect(surface = self.screen, color=(225,225,225), rect=self.hitbox)
         
         self.check_collision(tiles = tiles)
     
@@ -64,7 +75,7 @@ class Portal(Sprite):
     def tile_check(self, tiles):
         col = []
         for tile in tiles:
-            if self.rect.colliderect(tile):
+            if self.hitbox.colliderect(tile):
                 col.append(tile)
         return col
     
