@@ -21,8 +21,12 @@ class Portals:
             if portal.facing == 4:
                 collisions = portal.check_pacman(pacman)
                 if collisions:
-                    print("got a returnable collision")
-                    return portal.rect
+                    for other in self.portals:
+                        if portal != other:
+                            print("got a returnable collision")
+                            return other.rect
+                else:
+                    return None
 
     def update(self, tiles, pacman):
         self.portals.update(tiles, pacman)
