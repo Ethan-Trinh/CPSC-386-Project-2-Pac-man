@@ -16,7 +16,6 @@ class Portals:
         
     def shoot(self, game, x, y, facing): 
         self.portals.add(Portal(screen=game.screen, x=x+10, y=y+10, facing=facing))
-        print('*portal noises*')
         
     def update(self, tiles, pacman):
         self.portals.update(tiles, pacman)
@@ -93,7 +92,8 @@ class Portal(Sprite):
             self.facing = 4
     
     def check_pacman(self, pacman):
-        print('pacman was here')
+        if self.rect.colliderect(pacman):
+            print('pacman was here')
 
     def draw(self):
         image = self.timer.image()
