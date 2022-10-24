@@ -198,6 +198,7 @@ class Game:
     def reset(self):
         self.pacman.reset()
         self.scoreboard.reset()
+        self.reg_points.reset()
         pass
 
 
