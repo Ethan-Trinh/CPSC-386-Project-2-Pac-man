@@ -120,6 +120,8 @@ class Pacman(Sprite):
             print(self.rect)
             print(other_rect)
             #need to move pacman
+            self.posn.x = other_rect.x
+            self.posn.y=other_rect.y
 
         self.posn, self.rect = clamp(self.posn, self.rect, self.settings)
         self.draw()
