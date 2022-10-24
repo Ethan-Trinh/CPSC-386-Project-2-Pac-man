@@ -75,11 +75,14 @@ class Pacman(Sprite):
     def reset(self):
         if self.dying == True:
             self.really_dead()
-        if self.lives < 1:
-            self.game.game_over()
+       
         self.dying = False
         self.dead = False
         self.timer = self.timer_normal
+        if self.lives < 1:
+            self.lives =3
+            self.game.game_over()
+        
         self.posn = self.starting_point()
         self.timer_death.reset()
 
