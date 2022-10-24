@@ -28,6 +28,7 @@ class Pacman(Sprite):
         self.shoot = False
         self.game=game
         self.portals = game.portals
+        self.facing = 0
 
         # Image / Animation Variables
         self.image = pg.image.load('images/pacmaneat/pacman1.png')
@@ -98,12 +99,16 @@ class Pacman(Sprite):
         self.posn += self.vel
         if prev_posn_x < self.posn.x:
             self.timer = self.timer_right
+            self.facing = 0
         elif prev_posn_x > self.posn.x:
             self.timer = self.timer_left
+            self.facing = 1
         elif prev_posn_y > self.posn.y:
             self.timer = self.timer_up
+            self.facing = 2
         elif prev_posn_y < self.posn.y:
             self.timer = self.timer_down
+            self.facing = 3
 
         self.posn, self.rect = clamp(self.posn, self.rect, self.settings)
         self.draw()
@@ -117,7 +122,8 @@ class Pacman(Sprite):
         self.check_tunnel()
         if self.shoot:
             print('pew pew')
-            self.portals.shoot()
+            self.portals.shoot(game=self.game, x=self.hitbox.centerx, y = self.hitbox.centery)
+            self.portals.update(self.facing)
             self.shoot = False
         
     def draw(self):
