@@ -133,6 +133,7 @@ class Pacman(Sprite):
         self.check_tunnel()
         if self.shoot:
             print('pew pew')
+            self.sound.play_portal_sound()
             self.portals.shoot(game=self.game, x=self.hitbox.centerx, y = self.hitbox.centery, facing=self.facing)
             self.portals.up_port()
             self.shoot = False
