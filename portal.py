@@ -14,12 +14,12 @@ class Portals:
         self.portals.empty()
         self.portals_up = False
         
-    def shoot(self, game, x, y): 
-        self.portals.add(Portal(screen=game.screen, x=x, y=y))
+    def shoot(self, game, x, y, facing): 
+        self.portals.add(Portal(screen=game.screen, x=x, y=y, facing=facing))
         print('*portal noises*')
         
-    def update(self, facing):
-        self.portals.update(facing)
+    def update(self):
+        self.portals.update()
         
     def draw(self):
         for port in self.portals.sprites():
@@ -28,7 +28,7 @@ class Portals:
     
 class Portal(Sprite):
     
-    def __init__(self, screen, x, y):
+    def __init__(self, screen, x, y, facing):
         super().__init__()
         self.screen = screen
         self.portal_timer = [pg.image.load(f'images/Portals/portal{n}.png') for n in range(4)]
@@ -39,19 +39,20 @@ class Portal(Sprite):
         self.rect.bottom = y
         self.y = float(self.rect.y)
         self.x = float(self.rect.x)
+        self.facing = facing
         
-    def update(self, facing):
-        if facing == 0: # face right
+    def update(self):
+        if self.facing == 0: # face right
             self.x += 1
             self.rect.x = self.x
-        elif facing == 1: # face left
+        elif self.facing == 1: # face left
             self.x -= 1
             self.rect.x = self.x
-        elif facing == 2: # face up
-            self.y += 1
-            self.rect.y = self.y
-        elif facing == 3: # face down
+        elif self.facing == 2: # face up
             self.y -= 1
+            self.rect.y = self.y
+        elif self.facing == 3: # face down
+            self.y += 1
             self.rect.y = self.y
     
         self.draw()
