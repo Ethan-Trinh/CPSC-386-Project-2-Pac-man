@@ -6,6 +6,7 @@ class Portals:
     def __init__(self):
         self.portals = Group()
         self.portals_up = False
+        self.num = 0
         
     def up_port(self):
         self.portals_up = True
@@ -13,9 +14,12 @@ class Portals:
     def reset(self):
         self.portals.empty()
         self.portals_up = False
+        self.num = 0
         
     def shoot(self, game, x, y, facing): 
         self.portals.add(Portal(screen=game.screen, x=x+10, y=y+10, facing=facing))
+        self.num += 1
+        
     def check_collisions(self,pacman):
         for portal in self.portals:
             if portal.facing == 4:
@@ -74,15 +78,16 @@ class Portal(Sprite):
             self.rect.y = self.y
             self.hitbox.y = self.rect.centery
         elif self.facing == 4:
-            if self.hold == 0:
-                self.spawn_location =(self.rect.x, self.rect.y)
-            elif self.hold  == 1:
-                self.spawn_location =(self.rect.x, self.rect.y)
-            elif self.hold  == 2:
-                self.spawn_location =(self.rect.x, self.rect.y)
-            elif self.hold  == 3:
-                self.spawn_location =(self.rect.x, self.rect.y)
-            self.check_pacman(pacman=pacman)    
+            #if self.hold == 0:
+            #    self.spawn_location =(self.rect.x, self.rect.y)
+            #elif self.hold  == 1:
+            #    self.spawn_location =(self.rect.x, self.rect.y)
+            #elif self.hold  == 2:
+            #    self.spawn_location =(self.rect.x, self.rect.y)
+            #elif self.hold  == 3:
+            #    self.spawn_location =(self.rect.x, self.rect.y)
+            #self.check_pacman(pacman=pacman)  
+            pass
         
         pg.draw.rect(surface = self.screen, color=(225,225,225), rect=self.hitbox)
         
@@ -105,7 +110,6 @@ class Portal(Sprite):
     def check_pacman(self, pacman):
         if self.rect.colliderect(pacman):
             return True
-            print('pacman was here')
 
     def draw(self):
         image = self.timer.image()

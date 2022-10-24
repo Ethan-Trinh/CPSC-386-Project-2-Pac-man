@@ -116,7 +116,8 @@ class Pacman(Sprite):
             self.timer = self.timer_down
             self.facing = 3
         other_rect = self.portals.check_collisions(self.hitbox)
-        if other_rect != None: 
+        if other_rect != None:
+            self.portals.reset() 
             print(self.rect)
             print(other_rect)
             #need to move pacman
@@ -133,7 +134,7 @@ class Pacman(Sprite):
         self.hitbox.y = self.rect.y + self.rect.h/3
         # pg.draw.rect(surface = self.screen, color=(225,225,225), rect=self.hitbox)
         self.check_tunnel()
-        if self.shoot:
+        if self.shoot and self.portals.num < 2:
             print('pew pew')
             self.sound.play_portal_sound()
             self.portals.shoot(game=self.game, x=self.hitbox.centerx, y = self.hitbox.centery, facing=self.facing)
