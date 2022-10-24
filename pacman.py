@@ -122,10 +122,10 @@ class Pacman(Sprite):
         self.check_tunnel()
         if self.shoot:
             print('pew pew')
-            self.portals.shoot(game=self.game, x=self.hitbox.centerx, y = self.hitbox.centery)
+            self.portals.shoot(game=self.game, x=self.hitbox.centerx, y = self.hitbox.centery, facing=self.facing)
             self.portals.up_port()
             self.shoot = False
-        self.portals.update(self.facing)
+        self.portals.update()
     def draw(self):
         if self.timer.is_expired():
             self.timer = self.timer_normal
