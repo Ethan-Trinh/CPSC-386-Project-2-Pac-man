@@ -49,7 +49,8 @@ class Points():
         self.milkshake = Group()
         self.map_surface = pg.Surface((self.map_w, self.map_h))
         self.map_surface.set_colorkey((0, 0, 0))
-        self.pacman = game.pacman 
+        self.pacman = game.pacman
+        self.ghost_controller = game.ghost_controller 
         self.sb = game.scoreboard
         self.level = 1
         print(self.level)
@@ -151,6 +152,7 @@ class Points():
             for point2 in col2:
                 point2.collected(type = point2.type)
                 self.sb.increment_score(50)
+                self.ghost_controller.frightmode()
                 self.pacman.sound.eat_power_sound()
                 point2.kill()
         col3 = pg.sprite.spritecollide(self.pacman, self.fruit, False)
