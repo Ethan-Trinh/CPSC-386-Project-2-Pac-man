@@ -16,6 +16,7 @@ class Sounds:
         self.eat_ghost=  pg.mixer.Sound('sounds/eat_ghost.wav')
         self.ghost_retreat_sound = pg.mixer.Sound('sounds/retreating.wav')
         self.intermission = pg.mixer.Sound('sounds/intermission.wav')
+        self.portal_sound = pg.mixer.Sound('sounds/portalsound.wav')
         pg.mixer.music.load('sounds/siren_2.wav')
         pg.mixer.music.set_volume(0.1)
 
@@ -54,6 +55,8 @@ class Sounds:
     def packman_die_sound(self):
         self.stop_music()
         pg.mixer.Sound.play(self.death_sound, loops = 0)
+    def play_portal_sound(self):
+        pg.mixer.Sound.play(self.portal_sound)
 
     def start_sound(self):
         self.stop_music()
