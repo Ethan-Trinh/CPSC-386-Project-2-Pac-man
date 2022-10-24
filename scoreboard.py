@@ -1,13 +1,13 @@
 import pygame as pg 
 from fileinput import FileInput
 import os
-
 class Scoreboard:
     def __init__(self, game): 
         self.score = 0
         self.level = 0
         self.high_score = 0
-        
+        self.game = game
+        self.pacman = self.game.pacman
         self.settings = game.settings
         self.screen = game.screen
         self.screen_rect = self.screen.get_rect()
@@ -62,7 +62,15 @@ class Scoreboard:
         self.screen.blit(self.sideleft_image, (0,20))
         self.screen.blit(self.sideleft_image, (30,20))
         self.screen.blit(self.sideright_image, (1160,20))
-        self.screen.blit(self.sideright_image, (1120,20))
+        self.screen.blit(self.sideright_image, (1120,780))
+        level = self.font.render('Level' , True , self.text_color) 
+        self.screen.blit(level,(580,760))
+        height = 760
+        start_width = 20
+        for item in range(self.pacman.lives):
+            self.life = self.pacman.image_scaled
+            self.screen.blit(self.life,(start_width,height))
+            start_width +=40
         self.screen.blit(self.score_image, self.score_rect)
        
     def get_high_score(self):

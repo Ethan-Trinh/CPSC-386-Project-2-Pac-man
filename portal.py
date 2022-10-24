@@ -56,7 +56,8 @@ class Portal(Sprite):
             self.rect.y = self.y
     
         self.draw()
-        
+
+
     def draw(self):
         image = self.timer.image()
         rect = image.get_rect()
