@@ -18,8 +18,8 @@ class Portals:
         self.portals.add(Portal(screen=game.screen, x=x+10, y=y+10, facing=facing))
         print('*portal noises*')
         
-    def update(self, tiles):
-        self.portals.update(tiles)
+    def update(self, tiles, pacman):
+        self.portals.update(tiles, pacman)
         
     def draw(self):
         for port in self.portals.sprites():
@@ -43,13 +43,14 @@ class Portal(Sprite):
         self.y = float(self.rect.y)
         self.x = float(self.rect.x)
         self.facing = facing
+        self.spawn_location = (0, 0)
+        self.hold = self.facing
         
-    def update(self, tiles):
+    def update(self, tiles, pacman):
         if self.facing == 0: # face right
             self.x += 1
             self.rect.x = self.x
             self.hitbox.x = self.rect.centerx
-            
         elif self.facing == 1: # face left
             self.x -= 1
             self.rect.x = self.x
@@ -63,8 +64,15 @@ class Portal(Sprite):
             self.rect.y = self.y
             self.hitbox.y = self.rect.centery
         elif self.facing == 4:
-            print("hit a wall")
-        
+            if self.hold == 0:
+                self.spawn_location =(self.rect.x, self.rect.y)
+            elif self.hold  == 1:
+                self.spawn_location =(self.rect.x, self.rect.y)
+            elif self.hold  == 2:
+                self.spawn_location =(self.rect.x, self.rect.y)
+            elif self.hold  == 3:
+                self.spawn_location =(self.rect.x, self.rect.y)
+            self.check_pacman(pacman=pacman)    
         
         pg.draw.rect(surface = self.screen, color=(225,225,225), rect=self.hitbox)
         
@@ -83,6 +91,9 @@ class Portal(Sprite):
         collisions = self.tile_check(tiles)
         for tile in collisions:
             self.facing = 4
+    
+    def check_pacman(self, pacman):
+        print('pacman was here')
 
     def draw(self):
         image = self.timer.image()
