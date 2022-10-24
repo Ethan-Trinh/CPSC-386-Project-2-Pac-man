@@ -8,8 +8,8 @@ from pacman import Pacman
 from timer import Timer
 from vector import Vector
 from game_functions import clamp
-from sound import Sounds
 import random
+from sound import Sounds
 
 class Ghost(Sprite):
     ghost  = [pg.image.load(f'images/redghost/rgr{n}.png') for n in range(1,3)]
@@ -26,6 +26,7 @@ class Ghost(Sprite):
         self.screen_rect = self.screen.get_rect()
         #self.sb = game.scoreboard
         self.vel = Vector()
+        self.sound = Sounds()
         self.vel += self.settings.pac_speed * Vector(0,-1)
         #pacman.vel += settings.pac_speed * movement[key]
         self.posn = self.center_self()
@@ -35,12 +36,19 @@ class Ghost(Sprite):
         self.sprite_down = [pg.transform.rotozoom(pg.image.load(f'images/redghost/rgd{n}.png'), 0, 0.7) for n in range(1,3)]
         self.sprite_right = [pg.transform.rotozoom(pg.image.load(f'images/redghost/rgr{n}.png'), 0, 0.7) for n in range(1,3)]
         self.sprite_left = [pg.transform.rotozoom(pg.image.load(f'images/redghost/rgl{n}.png'), 0, 0.7) for n in range(1,3)]
+        self.sprite_run = [pg.transform.scale(pg.image.load(f'images/runghost/runghost{n}.png'), (30, 30)) for n in range(1,5)]
         self.pacman = pacman
         self.pacman_x = None
         self.pacman_y = None
-        self.sounds = Sounds()
-        
+        self.frightmode = False
+        self.sb = game.scoreboard
         self.timer = Timer(image_list=self.sprite_left)
+
+    def reset(self):
+        self.posn = self.center_self()        
+        self.vel += self.settings.pac_speed * Vector(0,-1)
+        self.frightmode = False
+        self.timer = Timer(image_list=self.sprite_up)
 
     def center_self(self):
         self.rect.centerx = self.screen_rect.centerx
@@ -79,7 +87,9 @@ class Ghost(Sprite):
         #Find Pacman
         #Pick Best Direction
         self.vel.x = random.choice([-1,1])
-        if self.vel.x < 0:
+        if self.frightmode:
+            self.timer = Timer(image_list=self.sprite_run)
+        elif self.vel.x < 0:
             self.timer = Timer(image_list=self.sprite_left)
         elif self.vel.x > 0:
             self.timer = Timer(image_list=self.sprite_right)
@@ -88,7 +98,9 @@ class Ghost(Sprite):
         #Find Pacman
         #Pick Best Direction
         self.vel.y = random.choice([-1,1])
-        if self.vel.y < 0:
+        if self.frightmode:
+            self.timer = Timer(image_list=self.sprite_run)
+        elif self.vel.y < 0:
             self.timer = Timer(image_list=self.sprite_up)
         elif self.vel.y > 0:
             self.timer = Timer(image_list=self.sprite_down)           
@@ -101,12 +113,12 @@ class Ghost(Sprite):
     
     def update(self,tiles):
         self.check_edges()
-        hitx,hity = False,False
-        x,y = self.get_current_tile()
+        #hitx,hity = False,False
+        #x,y = self.get_current_tile()
         self.check_x_collisions(tiles)
         self.check_y_collisions(tiles)
-
-        self.check_tunnel()
+        self.check_x_collisions(tiles)
+        self.check_y_collisions(tiles)
         #print(f'ghost is on {x}, {y}')
         # Did this update cause us to hit a wall?
         self.posn += self.vel 
@@ -146,16 +158,16 @@ class Ghost(Sprite):
                 self.posn.y += 2
             self.rect.y = self.posn.y
             self.update_direction_x()
-    def check_tunnel(self):
-        if self.vel.x > 0 and self.posn.x >= 1080:
-            self.posn.x = 64
-        if self.vel.x < 0 and self.posn.x <= 60:
-            self.posn.x = 1080
+
     def check_pacman_collisions(self):
         collisions = self.rect.colliderect(self.pacman)
         if collisions:
-            print("I ATE PAC")
-            self.pacman.hit()
+            if self.frightmode:
+                self.sound.eat_ghost_sound()
+                self.sb.increment_score(200)
+                self.reset()
+            else:
+                self.pacman.hit()
 
 
 class Blinky(Ghost):
@@ -210,8 +222,21 @@ class GhostController():
         self.inky = Inky(game,pacman)
         self.clyde = Clyde(game,pacman)
         self.ghost_group = [self.blinky, self.pinky, self.inky, self.clyde]
+        self.ghosts = Group()
+        self.frightmodetick = 0
 
     def update(self,tiles):
         for ghost in self.ghost_group:
             ghost.check_pacman_collisions()
             ghost.update(tiles)
+            if self.frightmodetick == 3200:
+                ghost.frightmode = False
+                ghost.timer = Timer(image_list=ghost.sprite_left)
+
+    def frightmode(self):
+        self.frightmodetick = 0
+        for ghost in self.ghost_group:
+            ghost.frightmode = True
+            ghost.timer = Timer(image_list=ghost.sprite_run)
+            
+
